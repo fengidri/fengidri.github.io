@@ -3,8 +3,9 @@
 
 
 \section{字符format 的编码转换}
-
+\starttyping
 "Role:%s"  %name
+\stoptyping
 
 当这里的name 不是str 而是unicode的时候, python 会把前面的字符转换成unicode. 
 那么如果前而的字符串有中文字符. 那么这里就会出现问题. 因为python 会试用ascii的编码进行转移
@@ -27,5 +28,3 @@ python 程序就是不同的了.
 \section{参考}
 
 \goto[Encoding of Python stdout][http://www.macfreek.nl/memory/Encoding_of_Python_stdout]
-
-

@@ -1,8 +1,8 @@
 var INDEX;
 var CLASS;
 
-var URL_INDEX    = '/store/index.json';
-var URL_CLASS    = '/store/class.json';
+var URL_INDEX    = 'store/index.json';
+var URL_CLASS    = 'store/class.json';
 var URL_PREFIX   = '/store/';
 
 var DIV_LISTPOST;
@@ -94,6 +94,18 @@ $(document).ready(function(){
 
     DIV_LISTPOST.on('click', 'button', ShowChapter);
     DIV_CLASS.on('click', 'button', ClassShowListPost);
+
+    var path = window.location.pathname;
+    if (path[path.length - 1] != '/')
+    {
+        var t = path.split('/');
+        t = t.slice(0, t.length - 1);
+        path = t.join('/') + '/';
+    }
+
+    URL_PREFIX = path + URL_PREFIX;
+    URL_INDEX  = path + URL_INDEX;
+    URL_CLASS  = path + URL_CLASS;
 
     Init();
     ShowListPost();

@@ -33,6 +33,12 @@ div#h5{
 div#h6{
     text-indent:4em;
 }
+h1#title
+{ 
+    margin:2em;
+    color:green;
+    text-align:center;
+}
 h1
 { 
     color:green;
