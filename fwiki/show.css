@@ -1,0 +1,26 @@
+*{ 
+    margin:0;
+}
+p{ 
+    text-indent:2em;
+    margin-top:1em;
+    margin-bottom:1em;
+    line-height:200%;
+}
+li{
+    padding:4pt;
+    line-height:200%;
+
+}
+pre
+{ 
+    border-width:1pt;
+    border-style:solid;
+    padding:7pt;
+    width:80%;
+    margin:auto;
+    margin-top:5pt;
+    line-height:150%;
+    margin-bottom:5pt;
+    font-size:12pt;
+}

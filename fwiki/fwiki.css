@@ -1,0 +1,137 @@
+*{ 
+    margin:0;
+}
+body{ 
+    width:100%;
+}
+a{ 
+  font-size:20pt;
+    color:black;
+    text-decoration:none;
+}
+#index, #chapter{
+    display:none;
+}
+div#h2, div#h3, div#h4, div#h5, div#h6{ 
+    cursor:pointer;
+}
+div#h2:hover, div#h3:hover, div#h4:hover, div#h5:hover, div#h6:hover{ 
+    color:green;
+}
+div#h2{
+    text-indent:0em;
+}
+div#h3{
+    text-indent:1em;
+}
+div#h4{
+    text-indent:2em;
+}
+div#h5{
+    text-indent:3em;
+}
+div#h6{
+    text-indent:4em;
+}
+h1
+{ 
+    color:green;
+}
+h2
+{ 
+    margin-top:30pt;
+    font-size:30pt;
+    text-align:center
+}
+h3
+{ 
+    font-size:25pt;
+    color:black;
+    counter-increment: counter_section;
+    counter-reset:counter_subsection;
+    margin-top:3em;
+}
+h3:before
+{ 
+    content:counter(counter_section) '. ';
+}
+h4
+{ 
+    margin-top:3em;
+    font-size:20pt;
+    color:black;
+    counter-reset:counter_subsubsection;
+    counter-increment: counter_subsection;
+}
+h4:before
+{ 
+    content:counter(counter_section)'.'counter(counter_subsection) '. ';
+}
+h5
+{ 
+    font-size:15pt;
+    counter-increment: counter_subsubsection;
+    margin-top:3em;
+}
+h5:before
+{ 
+    content:counter(counter_section)'.'
+    counter(counter_subsection)'.'
+    counter(counter_subsubsection)'. '
+    ;
+}
+
+
+/*用于目录的整体*/
+#index
+{ 
+    top:6em;
+    left:1em;
+    position:fixed;
+    border-width:1px;
+    border-style:solid;
+    background-color:white;
+    padding: 1em 1em 1em 0;
+}
+#class_div{
+    top:6em;
+    right:1em;
+    width: 100px;
+    position:fixed;
+    border-width:1px;
+    border-style:solid;
+    background-color:white;
+    padding: 1em 1em 1em 1em;
+    text-align: center;
+}
+#class_div button{
+    width: 85%;
+}
+#index_close{ 
+    top:3em;
+    left:1em;
+    width: 45px;
+    height: 45px;
+    background: transparent url(/images/toolbar.gif) 0 0 no-repeat;
+    position:fixed;
+    cursor:pointer;
+}
+
+#listpost, #chapter{
+    width:      1000px;
+    margin:     auto;
+    border:     1px     solid;
+    min-height: 800px;
+    padding:    2em;
+    margin-top: 5em;
+}
+#listpost button{
+    width:      85%;
+    border:     1px solid;
+    display:    block;
+    margin:     auto;
+    padding:    1em;
+    font-size:  15px;
+    text-align: left;
+    cursor:     pointer;
+}
