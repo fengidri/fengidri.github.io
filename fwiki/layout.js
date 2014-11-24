@@ -94,7 +94,6 @@ $(document).ready(function(){
 
     DIV_LISTPOST.on('click', 'button', ShowChapter);
     DIV_CLASS.on('click', 'button', ClassShowListPost);
-    alert(host = window.location.host);
 
     Init();
     ShowListPost();
