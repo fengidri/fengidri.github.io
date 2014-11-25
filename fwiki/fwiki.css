@@ -43,6 +43,12 @@ h1
 { 
     color:green;
 }
+h2#ctitle{
+    margin:2em;
+    font-size:12pt;
+    text-align:center;
+    display:none;
+}
 h2
 { 
     margin-top:30pt;
@@ -51,7 +57,7 @@ h2
 }
 h3
 { 
-    font-size:25pt;
+    font-size:17pt;
     color:black;
     counter-increment: counter_section;
     counter-reset:counter_subsection;
@@ -68,7 +74,7 @@ h3:before
 h4
 { 
     margin-top:3em;
-    font-size:20pt;
+    font-size:15pt;
     color:black;
     counter-reset:counter_subsubsection;
     counter-increment: counter_subsection;
@@ -82,7 +88,7 @@ h4:before
 }
 h5
 { 
-    font-size:15pt;
+    font-size:12pt;
     counter-increment: counter_subsubsection;
     margin-top:3em;
 }
@@ -157,6 +163,10 @@ h5:before
     min-height: 100px;
     width:      50px;
     border:     1px solid;
+    text-align: center;
+}
+#edit button{
+    padding:0pt;
 }
 #edit #gvim img{
     padding:0;

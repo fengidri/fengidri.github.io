@@ -13,6 +13,7 @@ var DIV_INDEX;
 var DIV_EDIT;
 
 var BUTTON_GVIM;
+var TITLE;
 
 var CHAPTER_ID;
 function Init()//从服务器得到数据信息
@@ -25,9 +26,9 @@ function Init()//从服务器得到数据信息
               index = index.reverse();
               INDEX = [];
               var i;
-              var t = [];
               for (i in index)
               {
+                  var t = [];
                   t.id    = index[i][0];
                   t.title = index[i][1];
                   t.tags  = index[i][2];
@@ -57,6 +58,7 @@ function ShowListPost()// 显示list post
     DIV_LISTPOST.show();
     DIV_CHAPTER.hide();
     DIV_INDEX.hide();
+    TITLE.hide();
 
     var filter = false;// 可能带有参数, 指定要显示的IDs
     if (arguments.length > 0) filter = arguments[0];
@@ -82,8 +84,12 @@ function ShowChapter()
     DIV_LISTPOST.hide();
     DIV_CHAPTER.show();
 
+    TITLE.html($(this).text());
+    TITLE.show();
+
     var ID = $(this).attr('value');
     CHAPTER_ID = ID;
+
 
     var url = URL_PREFIX + ID + '/index.html';
     $.get(url, function(data){
@@ -119,6 +125,8 @@ $(document).ready(function(){
     DIV_CLASS    = $('div#class_div');
     DIV_CHAPTER  = $('div#chapter');
     DIV_INDEX    = $('div#index');
+
+    TITLE        = $('h2#ctitle');
 
 
     DIV_LISTPOST.on('click', 'button', ShowChapter);
