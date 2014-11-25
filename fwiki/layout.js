@@ -10,6 +10,11 @@ var DIV_HEADER;
 var DIV_CLASS;
 var DIV_CHAPTER;
 var DIV_INDEX;
+var DIV_EDIT;
+
+var BUTTON_GVIM;
+
+var CHAPTER_ID;
 function Init()//从服务器得到数据信息
 {
     $.ajax({  
@@ -78,6 +83,8 @@ function ShowChapter()
     DIV_CHAPTER.show();
 
     var ID = $(this).attr('value');
+    CHAPTER_ID = ID;
+
     var url = URL_PREFIX + ID + '/index.html';
     $.get(url, function(data){
         DIV_CHAPTER.html(data);
@@ -85,6 +92,27 @@ function ShowChapter()
     });
 
 }
+
+function EditWithGvim()
+{
+    $.post('/normal/gvim', {'arg': 'WikiGet ' + CHAPTER_ID}, 
+        function(){alert('OK');});
+}
+
+function EditInit()
+{
+    DIV_EDIT = $("#edit");
+    if (window.location.host != 'localhost')
+    {
+        DIV_EDIT.hide();
+        return;
+    }
+    DIV_EDIT.show();
+
+    BUTTON_GVIM = $("#edit #gvim");
+    BUTTON_GVIM.click(EditWithGvim);
+}
+
 $(document).ready(function(){
     DIV_LISTPOST = $('div#listpost');
     DIV_HEADER   = $('div#header');
@@ -92,8 +120,14 @@ $(document).ready(function(){
     DIV_CHAPTER  = $('div#chapter');
     DIV_INDEX    = $('div#index');
 
+
     DIV_LISTPOST.on('click', 'button', ShowChapter);
     DIV_CLASS.on('click', 'button', ClassShowListPost);
+
+
+    EditInit();
+
+
 
     var path = window.location.pathname;
     if (path[path.length - 1] != '/')

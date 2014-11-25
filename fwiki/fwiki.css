@@ -57,6 +57,10 @@ h3
     counter-reset:counter_subsection;
     margin-top:3em;
 }
+h3:first-of-type
+{ 
+    margin-top:0em;
+}
 h3:before
 { 
     content:counter(counter_section) '. ';
@@ -69,6 +73,9 @@ h4
     counter-reset:counter_subsubsection;
     counter-increment: counter_subsection;
 }
+h4:first-of-type{
+    margin-top:0em;
+}
 h4:before
 { 
     content:counter(counter_section)'.'counter(counter_subsection) '. ';
@@ -79,12 +86,14 @@ h5
     counter-increment: counter_subsubsection;
     margin-top:3em;
 }
+h5:first-of-type{
+    margin-top:0em;
+}
 h5:before
 { 
     content:counter(counter_section)'.'
     counter(counter_subsection)'.'
-    counter(counter_subsubsection)'. '
-    ;
+    counter(counter_subsubsection)'. ';
 }
 
 
@@ -140,4 +149,15 @@ h5:before
     font-size:  15px;
     text-align: left;
     cursor:     pointer;
+}
+#edit{
+    position:fixed;
+    top:15em;
+    right:1em;
+    min-height: 100px;
+    width:      50px;
+    border:     1px solid;
+}
+#edit #gvim img{
+    padding:0;
 }
