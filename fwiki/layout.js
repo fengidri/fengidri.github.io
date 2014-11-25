@@ -63,7 +63,7 @@ function ShowListPost()// 显示list post
     var filter = false;// 可能带有参数, 指定要显示的IDs
     if (arguments.length > 0) filter = arguments[0];
 
-    $(DIV_LISTPOST).html('...');
+    $(DIV_LISTPOST).html('');
     for (var i in INDEX)
     {
         if (filter && jQuery.inArray(INDEX[i].id, filter) == -1)
