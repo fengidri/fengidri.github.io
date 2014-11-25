@@ -3,7 +3,7 @@ var CLASS;
 
 var URL_INDEX    = 'store/index.json';
 var URL_CLASS    = 'store/class.json';
-var URL_PREFIX   = '/store/';
+var URL_PREFIX   = 'store/';
 
 var DIV_LISTPOST;
 var DIV_HEADER;

@@ -1,5 +1,6 @@
 *.py[cod]
 fweb/store/*
+.*
 
 # C extensions
 *.so
