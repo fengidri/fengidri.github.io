@@ -59,11 +59,12 @@ function ShowListPost()// 显示list post
     DIV_CHAPTER.hide();
     DIV_INDEX.hide();
     TITLE.hide();
+    DIV_EDIT.hide();
 
     var filter = false;// 可能带有参数, 指定要显示的IDs
     if (arguments.length > 0) filter = arguments[0];
 
-    $(DIV_LISTPOST).html('');
+    DIV_LISTPOST.html('');
     for (var i in INDEX)
     {
         if (filter && jQuery.inArray(INDEX[i].id, filter) == -1)
@@ -72,6 +73,7 @@ function ShowListPost()// 显示list post
             "'>" + INDEX[i].title + "</button>";
         DIV_LISTPOST.append(t);
     }
+    $( document ).scrollTop( 0 /*DIV_LISTPOST.offset( ).top*/ );
 }
 
 function ClassShowListPost()// 通过类显示list post
@@ -84,6 +86,7 @@ function ShowChapter()
     DIV_LISTPOST.hide();
     DIV_CHAPTER.html('...');
     DIV_CHAPTER.show();
+    DIV_EDIT.show();
 
     TITLE.html($(this).text());
     TITLE.show();

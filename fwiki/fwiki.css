@@ -3,11 +3,11 @@
 }
 body{ 
     width:100%;
+    font-size:13pt;
+    letter-spacing: 1px;
 }
 a{ 
-  font-size:20pt;
     color:black;
-    text-decoration:none;
 }
 #index, #chapter{
     display:none;
@@ -165,12 +165,8 @@ h5:before
     border:     1px solid;
     text-align: center;
 }
-#edit button{
-    padding:0pt;
-}
-#edit #gvim img{
-    padding:0;
-}
+
+
 div#buttom{
     margin-bottom: 9em;
     text-align: center;
