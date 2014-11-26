@@ -56,6 +56,7 @@ function Init()//从服务器得到数据信息
 function ShowListPost()// 显示list post
 {
     DIV_LISTPOST.show();
+
     DIV_CHAPTER.hide();
     DIV_INDEX.hide();
     TITLE.hide();
@@ -84,6 +85,7 @@ function ClassShowListPost()// 通过类显示list post
 function ShowChapter()
 {
     DIV_LISTPOST.hide();
+
     DIV_CHAPTER.html('...');
     DIV_CHAPTER.show();
     DIV_EDIT.show();
