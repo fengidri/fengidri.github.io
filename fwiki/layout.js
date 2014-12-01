@@ -4,6 +4,7 @@ var CLASS;
 var URL_INDEX    = 'store/index.json';
 var URL_CLASS    = 'store/class.json';
 var URL_PREFIX   = 'store/';
+var CHAPTER_URL;
 
 var DIV_LISTPOST;
 var DIV_HEADER;
@@ -12,11 +13,12 @@ var DIV_CHAPTER;
 var DIV_INDEX;
 var DIV_EDIT;
 
-var BUTTON_GVIM;
+var BUTTON_GVIM;   // 打开GVIM 进行编辑
+var BUTTON_OPTION; // 用户打开弹出层进行信息修改
 var TITLE;
 
 var CHAPTER_ID;
-function Init()//从服务器得到数据信息
+function DataInit()//从服务器得到数据信息
 {
     $.ajax({  
           url : URL_INDEX,  
@@ -43,14 +45,35 @@ function Init()//从服务器得到数据信息
         async : false,  
         success: function(cls){ 
             CLASS = cls; 
+            DIV_CLASS.append($('<div>').text('全部'));
             for (var c in CLASS)
             {
-                var t= "<button>" + c + "</button>";
-                DIV_CLASS.append(t);
+                DIV_CLASS.append($('<div>').text(c));
 
             }
         }
     });
+}
+
+function GetInfo(ID)
+{
+    for (var i in INDEX)
+    {
+        if (INDEX[i].id == ID)
+        {
+            return INDEX[i];
+        }
+    }
+}
+function GetClass(ID)
+{
+    for (var c in CLASS)
+    {
+        if ($.inArray(ID, CLASS[c]))
+        {
+            return c;
+        }
+    }
 }
 
 function ShowListPost()// 显示list post
@@ -70,16 +93,16 @@ function ShowListPost()// 显示list post
     {
         if (filter && jQuery.inArray(INDEX[i].id, filter) == -1)
                 continue;
-        var t = "<button value='" + INDEX[i].id +
-            "'>" + INDEX[i].title + "</button>";
-        DIV_LISTPOST.append(t);
+        DIV_LISTPOST.append($('<button>').val(INDEX[i].id).text(INDEX[i].title));
     }
     $( document ).scrollTop( 0 /*DIV_LISTPOST.offset( ).top*/ );
 }
 
 function ClassShowListPost()// 通过类显示list post
 {
-    ShowListPost(CLASS[$(this).text()]);
+    // 得到指定的类的id 的list
+    var f = CLASS[$(this).text()];
+    ShowListPost(f);
 }
 
 function ShowChapter()
@@ -88,7 +111,7 @@ function ShowChapter()
 
     DIV_CHAPTER.html('...');
     DIV_CHAPTER.show();
-    DIV_EDIT.show();
+    EditShow();
 
     TITLE.html($(this).text());
     TITLE.show();
@@ -96,13 +119,14 @@ function ShowChapter()
     var ID = $(this).attr('value');
     CHAPTER_ID = ID;
 
+    CHAPTER_URL = URL_PREFIX + ID;
 
-    var url = URL_PREFIX + ID + '/index.html';
+    var url = CHAPTER_URL + '/index.html';
+
     $.get(url, function(data){
         DIV_CHAPTER.html(data);
         index_init(DIV_INDEX, DIV_CHAPTER);
     });
-
 }
 
 function EditWithGvim()
@@ -111,7 +135,7 @@ function EditWithGvim()
         function(){alert('OK');});
 }
 
-function EditInit()
+function EditShow()
 {
     DIV_EDIT = $("#edit");
     if (window.location.host != 'localhost')
@@ -125,36 +149,6 @@ function EditInit()
     BUTTON_GVIM.click(EditWithGvim);
 }
 
-$(document).ready(function(){
-    DIV_LISTPOST = $('div#listpost');
-    DIV_HEADER   = $('div#header');
-    DIV_CLASS    = $('div#class_div');
-    DIV_CHAPTER  = $('div#chapter');
-    DIV_INDEX    = $('div#index');
-
-    TITLE        = $('h2#ctitle');
-
-
-    DIV_LISTPOST.on('click', 'button', ShowChapter);
-    DIV_CLASS.on('click', 'button', ClassShowListPost);
-
-
-    EditInit();
 
 
 
-    var path = window.location.pathname;
-    if (path[path.length - 1] != '/')
-    {
-        var t = path.split('/');
-        t = t.slice(0, t.length - 1);
-        path = t.join('/') + '/';
-    }
-
-    URL_PREFIX = path + URL_PREFIX;
-    URL_INDEX  = path + URL_INDEX;
-    URL_CLASS  = path + URL_CLASS;
-
-    Init();
-    ShowListPost();
-});
