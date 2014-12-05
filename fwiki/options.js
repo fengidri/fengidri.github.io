@@ -71,5 +71,9 @@ function OptionInit()
     BUTTON_OPTION.click(OptionLayer);
     BUTTON_ADD.click(AddClassOptions);
     $('#layer_option #submit').click(layersubmit);
+
+
+    BUTTON_GVIM = $("#edit #gvim");
+    BUTTON_GVIM.click(EditWithGvim);
 }
 

@@ -118,7 +118,8 @@ function ShowChapter(ID)
     DIV_CHAPTER.show();
     EditShow();
 
-    TITLE.html(GetInfo(ID).title);
+    var p = location.pathname + '?id=' + ID;
+    TITLE.html($('<a>').text(GetInfo(ID).title).attr('href', p));
     TITLE.show();
 
     CHAPTER_ID = ID;
@@ -148,9 +149,6 @@ function EditShow()
         return;
     }
     DIV_EDIT.show();
-
-    BUTTON_GVIM = $("#edit #gvim");
-    BUTTON_GVIM.click(EditWithGvim);
 }
 
 
