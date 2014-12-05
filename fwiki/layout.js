@@ -104,8 +104,13 @@ function ClassShowListPost()// 通过类显示list post
     var f = CLASS[$(this).text()];
     ShowListPost(f);
 }
+function EShowChapter()// 用于事件回调
+{
+    var ID = $(this).attr('value');
+    ShowChapter(ID);
+}
 
-function ShowChapter()
+function ShowChapter(ID)
 {
     DIV_LISTPOST.hide();
 
@@ -116,7 +121,6 @@ function ShowChapter()
     TITLE.html($(this).text());
     TITLE.show();
 
-    var ID = $(this).attr('value');
     CHAPTER_ID = ID;
 
     CHAPTER_URL = URL_PREFIX + ID;

@@ -1,0 +1,29 @@
+%title:the vim plugin of fengidri
+\section{说明}
+本文是对于我个人的vim 插件的一些说明. 我发现我们有时基于一个很好的想法编写
+一个插件, 这个想法在我们的大脑中. 但是如果没有经常性使用, 又或者这个功能
+比较复杂一段时间之后, 我们自己都不知道这个软件的功能了. 
+
+并且如果没有详细地记录下这些插件的功能, 当我们开发新的功能的时候有可能破坏
+了旧的功能. 
+
+所有的插件的源码:\goto[pyplugin][http://github.com/fengidri/pyplugin]
+\section{Frain}
+这是由几个功能性插件组合成的插件用于对于工程进行管理. 当然也可以单独使用.
+\subsection{PathsExp}
+文件浏览工具, 与Nerttree 的功能相似. 只是为了提供更好的接口给Frain 中
+的其它插件. 
+
+为了可以与别的插件进行交互, PathsExp 是基于一个setting 的数据进行工作的.
+这个setting 中指定了当前要列出一工作的目录与这些目录的呈现的名字.
+
+\starttable
+\NC PathsExp [path [name]]\VL 依赖于当前的setting刷新数据.  如果有path/name参数, 则会把path/name 增加到setting中去.\AR
+\NC PathsExpFilter   \VL 开启/关闭过滤\AR
+\NC PathsExpRefresh  \VL 刷新当前的窗口. 目前PathsExp 没有对于实现的目录进行跟踪, 所以要手动刷新.\AR
+\NC PathsExpOpen   \VL 当focus 在PathsExp 窗口时, 打开当前光标下文件/目录\AR
+\NC PathsExpFind \VL 在PathsExp 窗口中显示当前文件的位置\AR
+\NC PathsExpGo \VL 切换到PathsExp 窗口\AR
+\stoptable
+
+

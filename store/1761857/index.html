@@ -1,0 +1,18 @@
+
+
+
+<h3>说明</h3>
+<p>本文是对于我个人的vim 插件的一些说明. 我发现我们有时基于一个很好的想法编写一个插件, 这个想法在我们的大脑中. 但是如果没有经常性使用, 又或者这个功能比较复杂一段时间之后, 我们自己都不知道这个软件的功能了. </p><p>并且如果没有详细地记录下这些插件的功能, 当我们开发新的功能的时候有可能破坏了旧的功能. </p><p>所有的插件的源码:<a href=http://github.com/fengidri/pyplugin >pyplugin</a>
+
+<h3>Frain</h3>
+<p>这是由几个功能性插件组合成的插件用于对于工程进行管理. 当然也可以单独使用.
+
+<h4>PathsExp</h4>
+<p>文件浏览工具, 与Nerttree 的功能相似. 只是为了提供更好的接口给Frain 中的其它插件. </p><p>为了可以与别的插件进行交互, PathsExp 是基于一个setting 的数据进行工作的.这个setting 中指定了当前要列出一工作的目录与这些目录的呈现的名字.</p><p><table>
+<tr><td>PathsExp path name</td><td>依赖于当前的setting刷新数据. 如果有path/name参数, 则会把path/name 增加到setting中去.</td></tr>
+<tr><td>PathsExpFilter </td><td>开启/关闭过滤</td></tr>
+<tr><td>PathsExpRefresh </td><td>刷新当前的窗口. 目前PathsExp 没有对于实现的目录进行跟踪, 所以要手动刷新.</td></tr>
+<tr><td>PathsExpOpen </td><td>当focus 在PathsExp 窗口时, 打开当前光标下文件/目录</td></tr>
+<tr><td>PathsExpFind </td><td>在PathsExp 窗口中显示当前文件的位置</td></tr>
+<tr><td>PathsExpGo </td><td>切换到PathsExp 窗口</td></tr>
+</table>
