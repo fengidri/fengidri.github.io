@@ -118,7 +118,7 @@ function ShowChapter(ID)
     DIV_CHAPTER.show();
     EditShow();
 
-    TITLE.html($(this).text());
+    TITLE.html(GetInfo(ID).title);
     TITLE.show();
 
     CHAPTER_ID = ID;
