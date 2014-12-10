@@ -1,0 +1,53 @@
+%title:cottle
+\section{说明}
+cottle 的设计来源与bottle, 与web.py.
+bottle是一个优秀的小型的web框架. web.py也是一个优秀的框架. 
+web.py中的一个吸引我的地方在于使用类来处理一个url. 不同的请求方法
+对应于类的不同的处理方法.  这让我感觉与restful 思想非常接近. 并且
+我感觉可能在类的应用上更进一步. 
+
+另一个方面bottle 对于web的处理让我非常着迷. 处理非常优雅. 
+
+所以我在bottle的源代码的基础上整合进了web.py的类处理风格. 并进一步
+利用了类的处理方式带来的便利. 
+这与bottle 的方向是完全不同的所以没有进行整个进bottle, 而是试着写一个
+完全新的web框架.
+
+\section{接口说明}
+\subsection{handle}
+所有应用上对于url的处理类应该继承自这个类. 
+
+\startitemize
+\item  [Before]
+在调用GET, POST, PUT 这些http 请求方法之前会调用Before方法. 如果这个
+方法的返回值不是True, 则不会调用处理方法. Before 中应该自己处理返回情况.
+
+\item[After]
+在调用完成处理方法之后调用. 
+
+\item[query] url 中的请求参数
+
+\item[env] wsgi 参数
+
+\item [forms] post, put 提交的body的内容. 如果有指明是json, 则会自解析后
+返回. 
+
+\item [abort] 异常响应.
+\item [ redirect] 重定向.
+\item [ set_content_json] 设置返回值是json 数据. 
+\item [cfile] 返回静态文件.
+\starttyping
+    def cfile(self, filename, root, mimetype='auto', download=False,
+            charset='UTF-8'):
+\stoptyping
+\startitemize
+\item  [filename] 文件名
+\item [ root] 文件路径
+\item [mimetype] 文件的类型
+\item [ download] 是否开启下载
+\item [charset] 编码
+\stopitemize
+
+
+
+\stopitemize

@@ -1,0 +1,35 @@
+
+
+
+<h3>说明</h3>
+<p>cottle 的设计来源与bottle, 与web.py.bottle是一个优秀的小型的web框架. web.py也是一个优秀的框架. web.py中的一个吸引我的地方在于使用类来处理一个url. 不同的请求方法对应于类的不同的处理方法. 这让我感觉与restful 思想非常接近. 并且我感觉可能在类的应用上更进一步. </p><p>另一个方面bottle 对于web的处理让我非常着迷. 处理非常优雅. </p><p>所以我在bottle的源代码的基础上整合进了web.py的类处理风格. 并进一步利用了类的处理方式带来的便利. 这与bottle 的方向是完全不同的所以没有进行整个进bottle, 而是试着写一个完全新的web框架.</p><p>
+
+<h3>接口说明</h3>
+<p>
+
+<h4>handle</h4>
+<p>所有应用上对于url的处理类应该继承自这个类. </p><p></p>
+<ul>
+<li><b>Before</b>&nbsp;&nbsp;&nbsp;&nbsp;在调用GET, POST, PUT 这些http 请求方法之前会调用Before方法. 如果这个方法的返回值不是True, 则不会调用处理方法. Before 中应该自己处理返回情况.</p><p></li>
+<li><b>After</b>&nbsp;&nbsp;&nbsp;&nbsp;在调用完成处理方法之后调用. </p><p></li>
+<li><b>query</b>&nbsp;&nbsp;&nbsp;&nbsp;url 中的请求参数</p><p></li>
+<li><b>env</b>&nbsp;&nbsp;&nbsp;&nbsp;wsgi 参数</p><p></li>
+<li><b>forms</b>&nbsp;&nbsp;&nbsp;&nbsp;post, put 提交的body的内容. 如果有指明是json, 则会自解析后返回. </p><p></li>
+<li><b>abort</b>&nbsp;&nbsp;&nbsp;&nbsp;异常响应.</li>
+<li><b> redirect</b>&nbsp;&nbsp;&nbsp;&nbsp;重定向.</li>
+<li><b> set_content_json</b>&nbsp;&nbsp;&nbsp;&nbsp;设置返回值是json 数据. </li>
+<li><b>cfile</b>&nbsp;&nbsp;&nbsp;&nbsp;返回静态文件.<pre>def cfile(self, filename, root, mimetype='auto', download=False,
+            charset='UTF-8'):
+</pre>
+<p></p>
+<ul>
+<li><b>filename</b>&nbsp;&nbsp;&nbsp;&nbsp;文件名</li>
+<li><b> root</b>&nbsp;&nbsp;&nbsp;&nbsp;文件路径</li>
+<li><b>mimetype</b>&nbsp;&nbsp;&nbsp;&nbsp;文件的类型</li>
+<li><b> download</b>&nbsp;&nbsp;&nbsp;&nbsp;是否开启下载</li>
+<li><b>charset</b>&nbsp;&nbsp;&nbsp;&nbsp;编码</li>
+</ul>
+<p>
+</p><p></li>
+</ul>
+<p>
