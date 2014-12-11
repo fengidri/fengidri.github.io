@@ -12,6 +12,7 @@ function OptionLayer()
     var cls = GetClass(CHAPTER_ID);
 
     $('#layer_option #class').empty();
+    $('#layer_option #class').append($('<option>').text('请选择'));
     for (var c in CLASS)
     {
         $('#layer_option #class').append($('<option>').val(c).text(c));
@@ -20,7 +21,7 @@ function OptionLayer()
 
     $('#layer_option #title').val(info.title);
     $('#layer_option #tags').val(info.tags);
-    $('#layer_option #class').find("option[text='" + cls + "']").attr("selected",true);
+    $('#layer_option #class').find("option[value='" + cls + "']").attr("selected",true);
     $.layer({
         type : 1,
         title : '文章信息修改',
@@ -47,6 +48,11 @@ function layersubmit()
     var title = $('#layer_option #title').val();
     var cls = $('#layer_option #class').val();
     var tags = $('#layer_option #tags').val();
+    if (!cls)
+    {
+        alert('请选择分类!');
+        return;
+    }
     $.ajax({
         url: OPTIONS_URL_PRE + CHAPTER_ID,
         method:"PUT",

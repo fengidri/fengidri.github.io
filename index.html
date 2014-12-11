@@ -15,54 +15,6 @@
 <script src='fwiki/options.js'></script>
 
 <script>
-function getUrlParams() {  
-    var result = {};  
-    var params = (window.location.search.split('?')[1] || '').split('&');  
-    for(var param in params) {  
-        if (params.hasOwnProperty(param)) {  
-            paramParts = params[param].split('=');  
-            result[paramParts[0]] = decodeURIComponent(paramParts[1] || "");  
-        }  
-    }  
-    return result;  
-}
-$(document).ready(function(){
-    DIV_LISTPOST = $('div#listpost');
-    DIV_HEADER   = $('div#header');
-    DIV_CLASS    = $('div#class_div');
-    DIV_CHAPTER  = $('div#chapter');
-    DIV_INDEX    = $('div#index');
-
-    TITLE        = $('h2#ctitle');
-
-
-    DIV_LISTPOST.on('click', 'button', EShowChapter);
-    DIV_CLASS.on('click', 'div', ClassShowListPost);
-
-    EditShow();
-    OptionInit();
-
-    var path = window.location.pathname;
-    if (path[path.length - 1] != '/')
-    {
-        var t = path.split('/');
-        t = t.slice(0, t.length - 1);
-        path = t.join('/') + '/';
-    }
-
-    URL_PREFIX = path + URL_PREFIX;
-    URL_INDEX  = path + URL_INDEX;
-    URL_CLASS  = path + URL_CLASS;
-
-    DataInit();
-    var ID=getUrlParams().id;
-    if (ID){
-        ShowChapter(ID);
-    }
-    else{
-        ShowListPost();
-    }
-});
 
 </script>
 
@@ -71,12 +23,18 @@ $(document).ready(function(){
 </head>
 <body>
     <h1 id=title>fengidri 的博客</h1>
-    <h2 id=ctitle></h1>
 <div id='header'></div>
 <div id='class_div'></div>
 <div id='listpost'></div>
 
-<div id='chapter'></div>
+<div id='chapter'>
+    <h2 id=ctitle></h1>
+    <div id=content ></div>
+    <label id=class> </label>
+    <label id=tag> </label>
+    <label id=time> </label>
+</div>
+
 <div id='index'></div>
 <div id='edit'>
     <img id='gvim' src='images/gvim.png'>

@@ -15,11 +15,15 @@ var DIV_EDIT;
 
 var BUTTON_GVIM;   // 打开GVIM 进行编辑
 var BUTTON_OPTION; // 用户打开弹出层进行信息修改
-var TITLE;
 
 var CHAPTER_ID;
 function DataInit()//从服务器得到数据信息
 {
+    if (window.location.host == 'localhost')
+    {
+        URL_INDEX = URL_INDEX + "?st=" + new Date().getTime();
+        URL_CLASS = URL_CLASS + "?st=" + new Date().getTime();
+    }
     $.ajax({  
           url : URL_INDEX,  
           async : false,  
@@ -67,9 +71,10 @@ function GetInfo(ID)
 }
 function GetClass(ID)
 {
+    ID = ID * 1;
     for (var c in CLASS)
     {
-        if ($.inArray(ID, CLASS[c]))
+        if ($.inArray(ID, CLASS[c]) > -1)
         {
             return c;
         }
@@ -82,7 +87,6 @@ function ShowListPost()// 显示list post
 
     DIV_CHAPTER.hide();
     DIV_INDEX.hide();
-    TITLE.hide();
     DIV_EDIT.hide();
 
     var filter = false;// 可能带有参数, 指定要显示的IDs
@@ -112,15 +116,36 @@ function EShowChapter()// 用于事件回调
 
 function ShowChapter(ID)
 {
+    var info = GetInfo(ID);
     DIV_LISTPOST.hide();
+    var content = DIV_CHAPTER.find('#content');
+    var cls     = DIV_CHAPTER.find('#class');
+    var tag     = DIV_CHAPTER.find('#tag');
+    var time    = DIV_CHAPTER.find('#time');
+    var title   = DIV_CHAPTER.find('#ctitle');
 
-    DIV_CHAPTER.html('...');
+    content.html('...');
+
+    var date = new Date(info.mtime * 1000);
+    Y = date.getFullYear() + '-';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    D = date.getDate() + ' ';
+    h = date.getHours() + ':';
+    m = date.getMinutes() + ':';
+    s = date.getSeconds();
+    time.text(Y+M+D+h+m+s);
+    cls.text(GetClass(ID));
+
+    if (info.tag)
+    {
+        tag.text(', ' + info.tag);
+    }
+
     DIV_CHAPTER.show();
     EditShow();
 
     var p = location.pathname + '?id=' + ID;
-    TITLE.html($('<a>').text(GetInfo(ID).title).attr('href', p));
-    TITLE.show();
+    title.html($('<a>').text(info.title).attr('href', p));
 
     CHAPTER_ID = ID;
 
@@ -129,8 +154,8 @@ function ShowChapter(ID)
     var url = CHAPTER_URL + '/index.html';
 
     $.get(url, function(data){
-        DIV_CHAPTER.html(data);
-        index_init(DIV_INDEX, DIV_CHAPTER);
+        content.html(data);
+        index_init(DIV_INDEX, content);
     });
 }
 
@@ -151,6 +176,53 @@ function EditShow()
     DIV_EDIT.show();
 }
 
+function getUrlParams() {  
+    var result = {};  
+    var params = (window.location.search.split('?')[1] || '').split('&');  
+    for(var param in params) {  
+        if (params.hasOwnProperty(param)) {  
+            paramParts = params[param].split('=');  
+            result[paramParts[0]] = decodeURIComponent(paramParts[1] || "");  
+        }  
+    }  
+    return result;  
+}
+$(document).ready(function(){
+    DIV_LISTPOST = $('div#listpost');
+    DIV_HEADER   = $('div#header');
+    DIV_CLASS    = $('div#class_div');
+    DIV_CHAPTER  = $('div#chapter');
+    DIV_INDEX    = $('div#index');
+
+
+
+    DIV_LISTPOST.on('click', 'button', EShowChapter);
+    DIV_CLASS.on('click', 'div', ClassShowListPost);
+
+    EditShow();
+    OptionInit();
+
+    var path = window.location.pathname;
+    if (path[path.length - 1] != '/')
+    {
+        var t = path.split('/');
+        t = t.slice(0, t.length - 1);
+        path = t.join('/') + '/';
+    }
+
+    URL_PREFIX = path + URL_PREFIX;
+    URL_INDEX  = path + URL_INDEX;
+    URL_CLASS  = path + URL_CLASS;
+
+    DataInit();
+    var ID=getUrlParams().id;
+    if (ID){
+        ShowChapter(ID);
+    }
+    else{
+        ShowListPost();
+    }
+});
 
 
 

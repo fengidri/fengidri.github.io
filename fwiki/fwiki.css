@@ -47,7 +47,6 @@ h2#ctitle{
     margin:2em;
     font-size:12pt;
     text-align:center;
-    display:none;
 }
 h2
 { 
@@ -147,6 +146,16 @@ h5:before
     min-height: 800px;
     padding:    2em;
     margin-top: 5em;
+}
+#chapter{
+    border:     0px     solid;
+}
+#chapter #time{
+    float:right;
+}
+#chapter #content{
+    border:     1px     solid;
+    padding:    2em;
 }
 #listpost button{
     width:      85%;
