@@ -2,29 +2,28 @@
 <head>
 <link rel="Stylesheet" type="text/css" href='fwiki/fwiki.css' />
 <link rel="Stylesheet" type="text/css" href='fwiki/show.css' />
+<link rel="Stylesheet" type="text/css" href='prettify/prettify.css' />
 
 
 <script src='js/jquery.js'></script>
+<script src='prettify/prettify.js'></script>
 <script src='layer/layer.min.js'></script>
-
-
 <script src='fwiki/index.js'></script>
-
 <script src='fwiki/layout.js'></script>
-
 <script src='fwiki/options.js'></script>
 
 <script>
-
+     $("pre").addClass("prettyprint");
+     prettyPrint();
 </script>
 
 
 <title>blog of fengidri</title>
 </head>
 <body>
-    <h1 id=title>fengidri 的博客</h1>
+    <h1 id=title><a href=http://blog.fengidri.me >fengidri 的博客</a></h1>
 <div id='header'></div>
-<div id='class_div'></div>
+<div id='class_div'><h3> 分类:</h3></div>
 <div id='listpost'></div>
 
 <div id='chapter'>

@@ -12,7 +12,7 @@
 这个过程本身是安全的，但是实施的时候存在一个风险：如果有人截获了登录请求，然后冒充远程主机，将伪造的公钥发给用户，那么用户很难辨别真伪。因为不像https协议，SSH协议的公钥是没有证书中心（CA）公证的，也就是说，都是自己签发的。 可以设想，如果攻击者插在用户与远程主机之间（比如在公共的wifi区域），用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么SSH的安全机制就荡然无存了。这种风险就是著名的"中间人攻击"（Man-in-the-middle attack）。</p><p>另一个问题是如果公钥被别人得到了怎么办? 一开始总是有这样的怀疑. 但是这正是这种方式的 '优美' 的地方.</p><p>这里的关键在于对于用户的认证是通过登录密码进行的.关键在于发送这个密码,并不让别人知道. 而不对称加密的特点就是使用公钥加密之后只能通过私钥进行解密.</p><p>
 
 <h3>应用</h3>
-<p>看了<a href=http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html >ssh remote login</a>和<a href=http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html >ssh port forwarding</a>之后发现对于SSH的应用了解还是太少了.</p><p>一个感想就是 SSH本身是一种协议, SSH 的关键是对于数据的传递. </p><p>当我们使用SSH 登录之后进行一些操作.其实这个过程中, 很多动作与SSH 并没有关系, 多大是SSHClinet 与SSH Server完成的一些额外的操作.</p><p></p>
+<p>看了&nbsp;<a href=http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html >ssh remote login</a>&nbsp;和&nbsp;<a href=http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html >ssh port forwarding</a>&nbsp;之后发现对于SSH的应用了解还是太少了.</p><p>一个感想就是 SSH本身是一种协议, SSH 的关键是对于数据的传递. </p><p>当我们使用SSH 登录之后进行一些操作.其实这个过程中, 很多动作与SSH 并没有关系, 多大是SSHClinet 与SSH Server完成的一些额外的操作.</p><p></p>
 <ul>
 <li>比如我们输入了一个命令'ls'. </li>
 <li>SSH Clinet 通过 SSH 把这个命令发送到 SSH Server.</li>

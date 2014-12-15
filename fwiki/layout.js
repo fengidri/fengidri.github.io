@@ -49,10 +49,11 @@ function DataInit()//从服务器得到数据信息
         async : false,  
         success: function(cls){ 
             CLASS = cls; 
-            DIV_CLASS.append($('<div>').text('全部'));
+            DIV_CLASS.append($('<div>').text('全部(' + INDEX.length + ')' ));
             for (var c in CLASS)
             {
-                DIV_CLASS.append($('<div>').text(c));
+                var t = c + '(' + CLASS[c].length + ')';
+                DIV_CLASS.append($('<div>').text(t));
 
             }
         }
@@ -96,8 +97,10 @@ function ShowListPost()// 显示list post
     for (var i in INDEX)
     {
         if (filter && jQuery.inArray(INDEX[i].id, filter) == -1)
-                continue;
-        DIV_LISTPOST.append($('<button>').val(INDEX[i].id).text(INDEX[i].title));
+            continue;
+        var t = $('<div>').text(INDEX[i].title);
+        t[0].chapterid = INDEX[i].id;
+        DIV_LISTPOST.append(t);
     }
     $( document ).scrollTop( 0 /*DIV_LISTPOST.offset( ).top*/ );
 }
@@ -105,13 +108,12 @@ function ShowListPost()// 显示list post
 function ClassShowListPost()// 通过类显示list post
 {
     // 得到指定的类的id 的list
-    var f = CLASS[$(this).text()];
+    var f = CLASS[$(this).text().split('(')[0]];
     ShowListPost(f);
 }
 function EShowChapter()// 用于事件回调
 {
-    var ID = $(this).attr('value');
-    ShowChapter(ID);
+    ShowChapter(this.chapterid);
 }
 
 function ShowChapter(ID)
@@ -153,9 +155,14 @@ function ShowChapter(ID)
 
     var url = CHAPTER_URL + '/index.html';
 
+    if (window.location.host == 'localhost')
+        url = url + "?st=" + new Date().getTime();
+
     $.get(url, function(data){
         content.html(data);
         index_init(DIV_INDEX, content);
+        $("pre").addClass("prettyprint");
+        prettyPrint();
     });
 }
 
@@ -196,7 +203,7 @@ $(document).ready(function(){
 
 
 
-    DIV_LISTPOST.on('click', 'button', EShowChapter);
+    DIV_LISTPOST.on('click', 'div', EShowChapter);
     DIV_CLASS.on('click', 'div', ClassShowListPost);
 
     EditShow();

@@ -11,6 +11,7 @@ function index_init( index, list ){
     headers = list.find( 'h1, h2, h3, h4, h5, h6' );
 
     index.html('');
+    index.append($('<h3>').text('目录'));
     h2=h3=h4=h5=h6=0;
     nu='';
     headers.each( function( ){

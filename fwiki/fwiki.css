@@ -39,7 +39,10 @@ h1#title
     color:green;
     text-align:center;
 }
-h1
+h1#title a{
+    color:green;
+}
+#content h1
 { 
     color:green;
 }
@@ -48,13 +51,13 @@ h2#ctitle{
     font-size:12pt;
     text-align:center;
 }
-h2
+#content h2
 { 
     margin-top:30pt;
     font-size:30pt;
     text-align:center
 }
-h3
+#content h3
 { 
     font-size:17pt;
     color:black;
@@ -62,15 +65,15 @@ h3
     counter-reset:counter_subsection;
     margin-top:3em;
 }
-h3:first-of-type
+#content h3:first-of-type
 { 
     margin-top:0em;
 }
-h3:before
+#content h3:before
 { 
     content:counter(counter_section) '. ';
 }
-h4
+#content h4
 { 
     margin-top:3em;
     font-size:15pt;
@@ -78,23 +81,23 @@ h4
     counter-reset:counter_subsubsection;
     counter-increment: counter_subsection;
 }
-h4:first-of-type{
+#content h4:first-of-type{
     margin-top:0em;
 }
-h4:before
+#content h4:before
 { 
     content:counter(counter_section)'.'counter(counter_subsection) '. ';
 }
-h5
+#content h5
 { 
     font-size:12pt;
     counter-increment: counter_subsubsection;
     margin-top:3em;
 }
-h5:first-of-type{
+#content h5:first-of-type{
     margin-top:0em;
 }
-h5:before
+#content h5:before
 { 
     content:counter(counter_section)'.'
     counter(counter_subsection)'.'
@@ -115,7 +118,7 @@ h5:before
 }
 #class_div{
     top:6em;
-    right:1em;
+    right:3em;
     position:fixed;
     border-width:1px;
     border-style:solid;
@@ -126,9 +129,14 @@ h5:before
 #class_div div{
     margin-top:4px;
     cursor:pointer;
-    border-bottom:1px solid;
     text-align: left;
+    padding: 0 4px;
+    color:blue;
 }
+#class_div div:first-child{
+    color:black;
+}
+
 #index_close{ 
     top:3em;
     left:1em;
@@ -157,7 +165,7 @@ h5:before
     border:     1px     solid;
     padding:    2em;
 }
-#listpost button{
+#listpost div{
     width:      85%;
     border:     1px solid;
     display:    block;
@@ -166,6 +174,9 @@ h5:before
     font-size:  15px;
     text-align: left;
     cursor:     pointer;
+    border:     0px     solid;
+    border-bottom:     1px     solid;
+    padding-bottom: 3px;
 }
 #edit{
     position:fixed;
