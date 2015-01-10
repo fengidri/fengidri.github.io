@@ -106,6 +106,13 @@ h2#ctitle{
 
 
 /*用于目录的整体*/
+#index_switch
+{ 
+    top:3em;
+    left:1em;
+    position:fixed;
+    cursor:pointer;
+}
 #index
 { 
     top:6em;

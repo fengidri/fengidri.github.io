@@ -60,11 +60,12 @@ function index_init( index, list ){
     if (h2 === 0 && h3 === 0)
     {
         index.hide('slow');
-        //    close_obj.hide();
     }
     else{
         index.show('slow');
     }
-
+    $('#index_switch').click(function(){
+        $('#index').toggle();
+    })
 }
 
