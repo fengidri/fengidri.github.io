@@ -1,0 +1,276 @@
+
+<html>
+<head>
+<script src='js/jquery.js'></script>
+<script src='js/index.js'></script>
+<style>
+.mr_baseinfo{
+    text-align: center;
+}
+.mr_name{
+    font-size: 20pt;
+}
+.mobile, .email{
+    margin:auto;
+    text-align: center;
+}
+#wrap{
+    background-color: #fafafa;
+    width: 800px;
+    margin:auto;
+    border: 1px solid;
+    padding:2em;
+}
+#index_switch
+{ 
+    top:3em;
+    left:1em;
+    position:fixed;
+    cursor:pointer;
+}
+#index
+{ 
+    top:6em;
+    left:1em;
+    position:fixed;
+    border-width:1px;
+    border-style:solid;
+    background-color:white;
+    padding: 1em 1em 1em 0;
+}
+hr.sub{
+    width:90%;
+}
+div#h2, div#h3, div#h4, div#h5, div#h6{ 
+    cursor:pointer;
+}
+div#h2:hover, div#h3:hover, div#h4:hover, div#h5:hover, div#h6:hover{ 
+    color:green;
+}
+div#h2{
+    text-indent:0em;
+}
+div#h3{
+    text-indent:1em;
+}
+div#h4{
+    text-indent:2em;
+}
+div#h5{
+    text-indent:3em;
+}
+div#h6{
+    text-indent:4em;
+}
+h3{
+    display: inline-block;
+    color: green;
+    background-color: #eee;
+    padding: 0.3em 1em 0.3em 1em;
+    border-radius: 27px;
+    margin:auto;
+}
+
+.mr_skill_name{
+    width:90px;
+    display:inline-block;
+}
+.mr_skill_con{
+    padding: 0.5em;
+}
+.mr_skill_plan, .mr_skill_plan em{
+    background-color: #eee;
+    width:600px;
+    height: 8px;
+    border-radius: 7px;
+    display:inline-block;
+}
+.mr_skill_plan em{
+    background-color: #00b88d;
+}
+.mr_content_m:before{
+    content: "工作内容:";
+    color:green;
+    margin:1em;
+}
+.mr_content_r{
+    float:right;
+}
+.head{
+    height: 250px;
+    width:866px;
+    background: url("images/stars.png");
+    position:relative;
+    left: -2em;
+    top: -2em;
+
+}
+/*
+span.mobile em i{
+    display:inline-block;
+    vertical-align:middle;
+    width: 12px;
+    height: 14px;
+    background-position: -131px -70px;
+    background: url('images/icons_mr.png') no-repeat;
+}
+*/
+#workExperience, #educationalBackground, #projectExperience,#selfDescription,
+#selfDescription, #skillsAssess{
+    border: 1px solid;
+    margin-bottom: 2em;
+    padding:1em 2em 2em 1em;
+}
+</style>
+
+</head>
+<body>
+<img src='images/index_switch.gif'   id=index_switch />
+<div id='index'></div>
+<div id=wrap>
+
+<div class=head>
+</div>
+
+<div class="mr_baseinfo">
+    <span class="mr_name"> 丁雪峰 </span><br/>
+    <span class="mr_intro"> 关注方向: 系统底层与分布式 </span><br/>
+    <span class="mobile"><em> <i></i>17712215562 </em></span>	
+    <span class="email"><em> fengidri@yeah.net </em></span>
+    <a href="http://github.com/fengidri" target="_blank" data-sns="6" data-site="http://github.com/fengidri"><span><em></em></span></a>
+</div>
+
+<h3> 工作经历 </h3>
+<div id="workExperience">
+            <div class="mr_moudle_content">
+                <h4>佳米科技 -- c软件工程师 2013.07 — 2014.12</h4>
+                <ol>
+                    <li> VOIP核心服务开发</li>
+                    <li> 软件开发管理</li>
+                    <li> 服务项目构架</li>
+                    <li> 分布式系统布署与管理</li>
+                </ol>
+            </div>
+</div>
+
+<h3>教育经历</h3>
+<div id="educationalBackground">
+    <h4>武汉理工大学</h4>
+    <span>本科 · 高分子材料科学与技术</span> <span>2013年毕业</span>
+</div>
+
+<h3>项目经验</h3>
+<div id="projectExperience">
+    <div class=sub_project>
+        <h4>linux平台编译打包发布安装系统</h4>
+        <div class="mr_content_r">
+            <span>全面负责</span>
+            <span>2014.06 - 2014.07</span>
+        </div>							
+        <div class="mr_content_m">
+            <ol>
+                <li>搭建linux 平台下20多个模块的编译环境</li>
+                <li>基于makefile 封装编译系统， 提供简单的接口</li>
+                <li>完成软件仓库平台， 处理版本控制，权限控制。实现仓库管理， 下载， 上传等功能</li>
+                <li>完成客户端安装管理软件， 实现安装升级管理等功能</li>
+            </ol>
+        </div>	
+    </div>
+    <hr class='sub' />
+    <div class=sub_project>
+        <h4>分布式VOIP 云系统架构</h4>
+        <div class="mr_content_r">
+            <span> 参与开发</span>
+            <span>2014.03 - 2014.05</span>
+        </div>							
+        <div class="mr_content_m">
+            <ol>
+                <li>b2bua开发</li>
+                <li>redis调研与接口开发</li>
+            </ol>
+        </div>							
+    <div>
+    <hr class='sub' />
+
+    <div class=sub_project>
+        <h4>TelnetServer</h4>
+        <div class="mr_content_r">
+        <span>全面负责</span>
+            <span>2013.11 - 2013.12</span>
+        </div>							
+        <div class="mr_content_m">
+            <ol>
+                <li>完成系统中所有模块的对外telnet请求的代理</li>
+                <li>提供丰富的，用户友好的用户界面</li>
+            </ol>
+        </div>							
+
+
+    </div>
+        </div>
+    </div>
+</div>
+
+<h3>自我描述</h3>
+<div id="selfDescription">
+    <div class="mr_self_l">
+    </div>	
+    <div class="mr_self_r">
+    </div>														
+</div>
+
+
+
+<h3>技能评价</h3>
+<div id="skillsAssess">
+    <div class="mr_moudle_content">
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="c/c++">C/C++</span>
+            <span class="mr_skill_plan" data-skillLevel = "90">
+                <em></em>
+            </span>
+        </div>	
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="python">python</span>
+            <span class="mr_skill_plan" data-skillLevel = "90">
+                <em></em>
+            </span>
+        </div>	
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="linux">linux</span>
+            <span class="mr_skill_plan" data-skillLevel = "90">
+                <em></em>
+            </span>
+        </div>	
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="web">web</span>
+            <span class="mr_skill_plan" data-skillLevel = "82">
+                <em></em>
+            </span>
+        </div>	
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="redis/mysql">redis</span>
+            <span class="mr_skill_plan" data-skillLevel = "80">
+                <em></em>
+            </span>
+        </div>	
+        <div class="mr_skill_con">
+            <span class="mr_skill_name" title="redis/mysql">mysql</span>
+            <span class="mr_skill_plan" data-skillLevel = "63">
+                <em></em>
+            </span>
+        </div>	
+    </div>						
+</div>
+<br /><br /><br /><br /><br /><br /><br />
+<body>
+<script>
+$(document).ready(function(){
+$(".mr_skill_plan").each(function(){
+    var w = $(this).width() * $(this).attr("data-skillLevel") / 100;
+    $(this).children('em').css('width', w);
+});
+index_init($('#index'), $('#wrap'), $('#index_switch'));
+});
+</script>
+</html>
