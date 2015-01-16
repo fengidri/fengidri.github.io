@@ -160,7 +160,7 @@ function ShowChapter(ID)
 
     $.get(url, function(data){
         content.html(data);
-        index_init(DIV_INDEX, content);
+        index_init(DIV_INDEX, content, $('#index_switch'));
         $("pre").addClass("prettyprint");
         prettyPrint();
     });
