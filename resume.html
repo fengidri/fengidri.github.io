@@ -271,6 +271,9 @@ $(".mr_skill_plan").each(function(){
     $(this).children('em').css('width', w);
 });
 index_init($('#index'), $('#wrap'), $('#index_switch'));
+if(document.body.clientWidth < 1000){
+    $('#index').hide();
+}
 });
 </script>
 </html>
