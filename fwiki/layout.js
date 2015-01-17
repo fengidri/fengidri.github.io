@@ -114,14 +114,19 @@ function ClassShowListPost()// 通过类显示list post
 }
 function EShowChapter()// 用于事件回调
 {
-    ShowChapter(this.chapterid);
+    
+    window.location.href = 
+        window.location.href.split("?")[0] + "?id=" + this.chapterid;
 }
 
 function DuoshuoShow(ID, Title, Url)
 {
+    DIV_DUOSHUO.attr('data-thread-id', ID);
     DIV_DUOSHUO.attr('data-thread-key', ID);
     DIV_DUOSHUO.attr('data-title', Title);
     DIV_DUOSHUO.attr('data-url', Url);
+    duoshuoQuery['thread_key'] = ID;
+    duoshuoQuery['thread_title'] = Title;
     DUOSHUO.EmbedThread(DIV_DUOSHUO[0]);
 }
 
