@@ -97,7 +97,7 @@ h3{
     float:right;
 }
 .head{
-    height: 250px;
+    height: 60px;
     width:866px;
     /*background: url("../images/stars.png");*/
     position:relative;
@@ -107,6 +107,7 @@ h3{
 }
 .links{
     position: relative;
+    text-decoration: none;
 }
 .links em{
     background: black;
