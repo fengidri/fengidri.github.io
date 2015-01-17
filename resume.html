@@ -1,140 +1,8 @@
-
 <html>
 <head>
 <script src='js/jquery.js'></script>
 <script src='js/index.js'></script>
-<style>
-body{
-    margin:0;
-}
-.mr_baseinfo{
-    text-align: center;
-}
-.mr_name{
-    font-size: 20pt;
-}
-.mobile, .email{
-    margin:auto;
-    text-align: center;
-}
-#wrap{
-    background-color: #fafafa;
-    width: 800px;
-    margin:auto;
-    border: 1px solid;
-    padding:2em;
-}
-#index_switch
-{ 
-    top:3em;
-    left:1em;
-    position:fixed;
-    cursor:pointer;
-}
-#index
-{ 
-    top:6em;
-    left:1em;
-    position:fixed;
-    border-width:1px;
-    border-style:solid;
-    background-color:white;
-    padding: 1em 1em 1em 0;
-}
-hr.sub{
-    width:90%;
-}
-div#h2, div#h3, div#h4, div#h5, div#h6{ 
-    cursor:pointer;
-}
-div#h2:hover, div#h3:hover, div#h4:hover, div#h5:hover, div#h6:hover{ 
-    color:green;
-}
-div#h2{
-    text-indent:0em;
-}
-div#h3{
-    text-indent:1em;
-}
-div#h4{
-    text-indent:2em;
-}
-div#h5{
-    text-indent:3em;
-}
-div#h6{
-    text-indent:4em;
-}
-h3{
-    display: inline-block;
-    color: green;
-    background-color: #eee;
-    padding: 0.3em 1em 0.3em 1em;
-    border-radius: 27px;
-    margin:auto;
-}
-
-.mr_skill_name{
-    width:90px;
-    display:inline-block;
-}
-.mr_skill_con{
-    padding: 0.5em;
-}
-.mr_skill_plan, .mr_skill_plan em{
-    background-color: #eee;
-    width:600px;
-    height: 8px;
-    border-radius: 7px;
-    display:inline-block;
-}
-.mr_skill_plan em{
-    background-color: #00b88d;
-}
-.mr_content_m:before{
-    content: "工作内容:";
-    color:green;
-    margin:1em;
-}
-.mr_content_r{
-    float:right;
-}
-.head{
-    height: 250px;
-    width:866px;
-    background: url("images/stars.png");
-    position:relative;
-    left: -2em;
-    top: -2em;
-
-}
-.links em{
-    background: black;
-    border-radius: 7px;
-    color:white;
-    padding: 4px;
-    display: none;
-}
-.links em:hover{
-    display: inline-block;
-}
-/*
-span.mobile em i{
-    display:inline-block;
-    vertical-align:middle;
-    width: 12px;
-    height: 14px;
-    background-position: -131px -70px;
-    background: url('images/icons_mr.png') no-repeat;
-}
-*/
-#workExperience, #educationalBackground, #projectExperience,#selfDescription,
-#selfDescription, #skillsAssess, #sub_wrap{
-    border: 1px solid;
-    margin-bottom: 2em;
-    padding:1em 2em 2em 1em;
-}
-</style>
+<link rel="Stylesheet" type="text/css" href='css/resume.css'></link>
 
 </head>
 <body>
@@ -148,8 +16,8 @@ span.mobile em i{
 <div class="mr_baseinfo">
     <span class="mr_name"> 丁雪峰 </span><br/>
     <span class="mr_intro"> 关注方向: 系统底层与分布式 </span><br/>
-    <span class="mobile"><em> <i></i>17712215562 </em></span>	
-    <span class="email"><em> fengidri@yeah.net </em></span>
+    <span class="mobile"><span></span>17712215562 </span>	
+    <span class="email"><span></span>fengidri@yeah.net </span>
     <br /><br />
 
     <a href="http://github.com/fengidri" class=links target="_blank" >
@@ -235,43 +103,57 @@ span.mobile em i{
 <h3> 个人作品 </h3>
 <div id='sub_wrap'>
     <div class=sub_works>
-        <a href=http://github.com/fengidri/cottle target=_blank><h4>Cottle</h4></a>
+        <h4>Cottle</h4>
         <div class=desc>
             restful思想的python web框架. 
-            <a href=http://blog.fengidri.me/?id=2211394 target=_blank> 详细说明
-            </a>
+            <div class=more>
+                <a href=http://blog.fengidri.me/?id=2211394 target=_blank>详细说明</a>
+                <a href=http://github.com/fengidri/cottle target=_blank>GitHub</a>
+            </div>
         </div>
     </div>
 
     <hr ></hr>
 
     <div class=sub_works>
-        <a href=http://github.com/fengidri/pyplugin target=_blank><h4>Pyplugin</h4></a>
+        <h4>Pyplugin</h4>
         <div class=desc>
             基于python的vim插件框架及插件.
-            <a href=http://blog.fengidri.me/?id=1761857 target=_blank> 详细说明
-            </a>
+            <div class=more>
+                <a href=http://blog.fengidri.me/?id=1761857 target=_blank>详细说明</a>
+                <a href=http://github.com/fengidri/pyplugin target=_blank>GitHub</a>
+            </div>
         </div>
     </div>
 
     <hr ></hr>
 
     <div class=sub_works>
-        <a href=http://github.com/fengidri/process_mod target=_blank><h4>Process_Mod</h4></a>
+        <h4>Process_Mod</h4>
         <div class=desc>
             linux 系统监控软件.
+            <div class=more>
+                <a class=more href=http://github.com/fengidri/process_mod target=_blank>GitHub</a>
+            </div>
         </div>
     </div>
-
 </div>
 
 
 <h3>自我描述</h3>
 <div id="selfDescription">
-    <ul>
-        <li> 关注方向: 系统底层 分布式</li>
-        <li> 关注方向: 系统底层 分布式</li>
-    </ul>
+        <p> <b>关注方向:</b> 系统底层 分布式</p>
+        <p> <b>追求极限:</b> 每一段代码都严格要求, 追求完美. 
+            曾为了提高程序的性能与可维护性将公司一个8000行的模块进行重构成1000行. 
+            对于代码进行高度抽象并降底耦合. 
+            目前一直运行非常良好, 并且可以方便扩展.
+        </p>
+        <p> <b>认真钻研</b>: 接手解决系统长期存在的日志爆盘问题后尝试各种思路. 
+            钻研了多种日志的处理方案与技术. 
+            并研究了磁盘写入的系统底层的处理过程与接口.
+            最后使用loop设备的特性完美解决问题.
+        </p>
+
     
 </div>
 
