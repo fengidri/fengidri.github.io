@@ -209,3 +209,9 @@ div#buttom{
     width: 400px;
     line-height:2.5;
 }
+.ds-thread{
+    border: 1px solid;
+    margin-top: 3em;
+    padding: 1em;
+    background-color: #eee;
+}

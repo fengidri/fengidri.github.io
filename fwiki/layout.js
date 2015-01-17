@@ -12,6 +12,7 @@ var DIV_CLASS;
 var DIV_CHAPTER;
 var DIV_INDEX;
 var DIV_EDIT;
+var DIV_DUOSHUO;
 
 var BUTTON_GVIM;   // 打开GVIM 进行编辑
 var BUTTON_OPTION; // 用户打开弹出层进行信息修改
@@ -116,6 +117,14 @@ function EShowChapter()// 用于事件回调
     ShowChapter(this.chapterid);
 }
 
+function DuoshuoShow(ID, Title, Url)
+{
+    DIV_DUOSHUO.attr('data-thread-key', ID);
+    DIV_DUOSHUO.attr('data-title', Title);
+    DIV_DUOSHUO.attr('data-url', Url);
+    DUOSHUO.EmbedThread(DIV_DUOSHUO[0]);
+}
+
 function ShowChapter(ID)
 {
     var info = GetInfo(ID);
@@ -143,11 +152,13 @@ function ShowChapter(ID)
         tag.text(', ' + info.tag);
     }
 
+
+    var p = 'http://blog.fengidri.me/?id=' + ID;
+    title.html($('<a>').text(info.title).attr('href', p));
+    DuoshuoShow(ID, info.title, p);
+
     DIV_CHAPTER.show();
     EditShow();
-
-    var p = location.pathname + '?id=' + ID;
-    title.html($('<a>').text(info.title).attr('href', p));
 
     CHAPTER_ID = ID;
 
@@ -200,6 +211,7 @@ $(document).ready(function(){
     DIV_CLASS    = $('div#class_div');
     DIV_CHAPTER  = $('div#chapter');
     DIV_INDEX    = $('div#index');
+    DIV_DUOSHUO  = $('div.ds-thread');
 
 
 
