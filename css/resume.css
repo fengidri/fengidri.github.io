@@ -99,7 +99,7 @@ h3{
 .head{
     height: 250px;
     width:866px;
-    background: url("../images/stars.png");
+    /*background: url("../images/stars.png");*/
     position:relative;
     left: -2em;
     top: -2em;
