@@ -6,6 +6,7 @@ body{
 }
 .mr_name{
     font-size: 20pt;
+    cursor:pointer;
 }
 .mobile, .email{
     margin:auto;
