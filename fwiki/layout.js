@@ -20,8 +20,10 @@ var BUTTON_OPTION; // 用户打开弹出层进行信息修改
 var CHAPTER_ID;
 function DataInit()//从服务器得到数据信息
 {
+    var localhost = false;
     if (window.location.host == 'localhost')
     {
+        localhost = true;
         URL_INDEX = URL_INDEX + "?st=" + new Date().getTime();
         URL_CLASS = URL_CLASS + "?st=" + new Date().getTime();
     }
@@ -41,6 +43,8 @@ function DataInit()//从服务器得到数据信息
                   t.tags  = index[i][2];
                   t.ctime = index[i][3];
                   t.mtime = index[i][4];
+                  t.post = index[i][5];
+                  if (!t.post && !localhost) continue;
                   INDEX.push(t);
               }
           },
@@ -101,9 +105,12 @@ function ShowListPost()// 显示list post
             continue;
         var t = $('<div>').text(INDEX[i].title);
         t[0].chapterid = INDEX[i].id;
+        // 对于还没有正式发布的高亮显示
+        if (!INDEX[i].post) t.css('color', 'red');
         DIV_LISTPOST.append(t);
     }
     $( document ).scrollTop( 0 /*DIV_LISTPOST.offset( ).top*/ );
+    close_attach_auto();
 }
 
 function ClassShowListPost()// 通过类显示list post
@@ -174,18 +181,24 @@ function ShowChapter(ID)
     if (window.location.host == 'localhost')
         url = url + "?st=" + new Date().getTime();
 
-    $.get(url, function(data){
-        content.html(data);
-        index_init(DIV_INDEX, content, $('#index_switch'));
-        $("pre").addClass("prettyprint");
-        prettyPrint();
+    $.ajax({
+        url:url, 
+        async: false,
+        success: function(data){
+            content.html(data);
+        }
     });
+    index_init(DIV_INDEX, content, $('#index_switch'));
+    $("pre").addClass("prettyprint");
+    prettyPrint();
+    // TODO 此时得到的index 的宽度总是1? 但是在resume里可以得正常的值
+    close_attach_auto();
 }
 
 function EditWithGvim()
 {
     $.post('/normal/gvim', {'arg': 'WikiGet ' + CHAPTER_ID}, 
-        function(){alert('OK');});
+        function(){});
 }
 
 function EditShow()
@@ -210,7 +223,36 @@ function getUrlParams() {
     }  
     return result;  
 }
+function close_attach_auto()
+{
+    //必要的时候自动关闭, 附加的窗口
+    var c_l, c_r;
+    if($("#listpost").is(":visible"))
+    {
+        c_l = $("#listpost").offset().left;
+        c_r = c_l + $("#listpost").width();
+    }else{
+        if($("#chapter").is(":visible"))
+        {
+            c_l = $("#chapter").offset().left;
+            c_r = c_l + $("#chapter").width();
+            if($("#index").offset().left + $("#index").width() > c_l)
+                $("#index").hide();
+            else
+                $("#index").show();
+        }else return;
+    }
+
+
+    if($("#class_div").offset().left < c_r)
+        $("#class_div").hide();
+    else
+        $("#class_div").show();
+
+}
 $(document).ready(function(){
+    //在窗口大小发生变化的时候调用些函数
+    window.onresize = close_attach_auto;
     DIV_LISTPOST = $('div#listpost');
     DIV_HEADER   = $('div#header');
     DIV_CLASS    = $('div#class_div');
@@ -222,6 +264,9 @@ $(document).ready(function(){
 
     DIV_LISTPOST.on('click', 'div', EShowChapter);
     DIV_CLASS.on('click', 'div', ClassShowListPost);
+    $('div#class_container h3').click(function(){
+        $('div#class_div' ).toggle();
+    });
 
     EditShow();
     OptionInit();

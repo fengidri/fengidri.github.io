@@ -123,7 +123,7 @@ h2#ctitle{
     background-color:white;
     padding: 1em 1em 1em 0;
 }
-#class_div{
+#class_container{
     top:6em;
     right:3em;
     position:fixed;
@@ -133,6 +133,8 @@ h2#ctitle{
     padding: 1em 1em 1em 1em;
     text-align: center;
 }
+#class_container h3{ cursor:pointer}
+
 #class_div div{
     margin-top:4px;
     cursor:pointer;

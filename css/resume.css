@@ -1,5 +1,7 @@
 body{
     margin:0;
+    line-height:2.0;
+    letter-spacing:0.5px;
 }
 .mr_baseinfo{
     text-align: center;
@@ -18,9 +20,6 @@ body{
     margin:auto;
     border: 1px solid;
     padding:2em;
-}
-hr.sub{
-    width:90%;
 }
 #index_switch
 { 
@@ -152,3 +151,16 @@ span.email span{
     margin-bottom: 2em;
     padding:1em 2em 2em 1em;
 }
+
+#hardpoint{
+    width: 90%;
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+#pic{
+    width: 150px;
+    float: left;
+    margin-right: 2em;
+}
+
