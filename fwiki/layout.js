@@ -31,7 +31,7 @@ function DataInit()//从服务器得到数据信息
           url : URL_INDEX,  
           async : false,  
           success : function(index){ 
-              //index = $.parseJSON(indxe); 
+              index = $.parseJSON(index); 
               index = index.reverse();
               INDEX = [];
               var i;
@@ -53,7 +53,8 @@ function DataInit()//从服务器得到数据信息
         url: URL_CLASS, 
         async : false,  
         success: function(cls){ 
-            CLASS = cls; 
+            //CLASS = cls; 
+            CLASS = $.parseJSON(cls); 
             DIV_CLASS.append($('<div>').text('全部(' + INDEX.length + ')' ));
             for (var c in CLASS)
             {

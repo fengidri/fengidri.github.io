@@ -1,0 +1,40 @@
+%Title: linux 声音系统
+%Class:
+%Post:1
+%
+%
+
+新的机器有耳机与HDMI 扬声器. 问题也有两个, 一是HDMI好像无法正常使用, 另一个
+是耳机应该可以使用但是没有声音.
+
+
+高级 Linux 声音体系（Advanced Linux Sound Architecture，ALSA）是Linux中提供声音设备驱动的内核组件，用来代替原来的开放声音系统（Open Sound System，OSSv3）。除了声音设备驱动，ALSA还包含一个用户空间的函数库，以方便开发者通过高级API使用驱动功能，而不必直接与内核驱动交互。
+
+alsa-utils 软件包，其中包含的 alsamixer 工具允许用户在控制台或终端中配置声音设备。 如果你需要 高质量重采样 、 软件模拟环绕立体声 和其他高级特性的话 ，请另外安装 alsa-plugins 软件包。
+
+
+
+PulseAudio 是在GNOME 或 KDE等桌面环境中广泛使用的音频服务。它在内核音频组件（比如ALSA 和 OSS）和应用程序之间充当代理的角色。由于Arch Linux默认包含ALSA，PulseAudio经常和ALSA协同使用。
+
+耳机没有声音的问题就是因为PulseAudio 没有安装导致的. 安装之后OK.
+
+
+但是HDMI 的问题并没有解决
+
+\starttyping
+ $ aplay -l
+ **** List of PLAYBACK Hardware Devices ****
+ card 0: NVidia [HDA NVidia], device 0: ALC1200 Analog [ALC1200 Analog]
+   Subdevices: 1/1
+   Subdevice #0: subdevice #0
+ card 0: NVidia [HDA NVidia], device 1: ALC1200 Digital [ALC1200 Digital]
+   Subdevices: 1/1
+   Subdevice #0: subdevice #0
+ card 0: NVidia [HDA NVidia], device 3: NVIDIA HDMI [NVIDIA HDMI]
+   Subdevices: 0/1
+   Subdevice #0: subdevice #0
+\stoptyping
+我们需要的是 HDMI 设备的信息，下面来做一个测试（在该例中，0是声卡编号，3是设备编号）：
+\starttyping
+ $ aplay -D plughw:0,3 /usr/share/sounds/alsa/Front_Center.wav
+\stoptyping
