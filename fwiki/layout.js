@@ -30,8 +30,8 @@ function DataInit()//从服务器得到数据信息
     $.ajax({  
           url : URL_INDEX,  
           async : false,  
+          dataType:'json',
           success : function(index){ 
-              index = $.parseJSON(index); 
               index = index.reverse();
               INDEX = [];
               var i;
@@ -52,6 +52,7 @@ function DataInit()//从服务器得到数据信息
     $.ajax({
         url: URL_CLASS, 
         async : false,  
+        dataType:'json',
         success: function(cls){ 
             //CLASS = cls; 
             CLASS = $.parseJSON(cls); 
