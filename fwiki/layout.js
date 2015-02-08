@@ -53,9 +53,7 @@ function DataInit()//从服务器得到数据信息
         url: URL_CLASS, 
         async : false,  
         dataType:'json',
-        success: function(cls){ 
-            //CLASS = cls; 
-            CLASS = $.parseJSON(cls); 
+        success: function(CLASS){ 
             DIV_CLASS.append($('<div>').text('全部(' + INDEX.length + ')' ));
             for (var c in CLASS)
             {
