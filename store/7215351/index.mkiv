@@ -46,6 +46,14 @@ noatime（或relatime）, nodiratime是另外两个可以考虑的挂载选项�
 数据显示，采用noatime选项后，在编译Linux内核的过程中，硬盘写入量比没使用时少了约 13\% 。 
 请依照数据自行权衡利弊。值得注意的是，noatime可能会导致某些依赖时间戳的程序产生问题，因此现在通常relatime代替。
 
+\section{定时trim}
+虽然实时TRIM选项-o discard效果并不好，但定期对已删除的文件做TRIM还是有意义的[12]，如：
+\starttyping
+# 告知硬盘分区"/"中的哪些块已不再被使用
+fstrim -v /
+\stoptyping
+
+
 
 \section{I/O 调度方案}
 默认的I/O调度一般针对磁盘寻址慢的特性做了专门优化，

@@ -105,6 +105,7 @@ function ShowListPost()// 显示list post
         if (filter && jQuery.inArray(INDEX[i].id, filter) == -1)
             continue;
         var t = $('<div>').text(INDEX[i].title);
+        t.append($('<span>').text(ChapterTime_(INDEX[i].ctime)));
         t[0].chapterid = INDEX[i].id;
         // 对于还没有正式发布的高亮显示
         if (!INDEX[i].post) t.css('color', 'red');
@@ -138,6 +139,44 @@ function DuoshuoShow(ID, Title, Url)
     DUOSHUO.EmbedThread(DIV_DUOSHUO[0]);
 }
 
+function ChapterTime_(time)
+{
+    var date = new Date( time * 1000);
+    var now = new Date();
+
+    Y = date.getFullYear();
+    if (Y == now.getFullYear())
+        Y = '';
+    else
+        Y = (Y + '-').substring(2,5);
+
+    M = date.getMonth();
+    D = date.getDate();
+    if (M == now.getMonth() && M == now.getDate())
+        M = D = '';
+    else
+        if (Y !=  '')
+            M = (M+1 < 10 ? '0'+(M+1) : M +1) + '-';
+        else
+            M = (M + 1) + '-';
+        D = (D < 10 ? '0'+D : D) + ' ';
+
+    h = date.getHours();
+    m = date.getMinutes();
+    if (h < 10)
+        h = '0' + h;
+    h = h + ':';
+    if (m < 10)
+        m = '0' + m;
+    return Y+M+D+h+m;
+
+}
+
+function ChapterTime(info)
+{
+    return ChapterTime_(info.ctime);
+}
+
 function ShowChapter(ID)
 {
     var info = GetInfo(ID);
@@ -150,14 +189,7 @@ function ShowChapter(ID)
 
     content.html('...');
 
-    var date = new Date(info.mtime * 1000);
-    Y = date.getFullYear() + '-';
-    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    D = date.getDate() + ' ';
-    h = date.getHours() + ':';
-    m = date.getMinutes() + ':';
-    s = date.getSeconds();
-    time.text(Y+M+D+h+m+s);
+    time.text(ChapterTime(info));
     cls.text(GetClass(ID));
 
     if (info.tag)
@@ -189,11 +221,28 @@ function ShowChapter(ID)
             content.html(data);
         }
     });
+    ShowImg(content.find('img'), CHAPTER_ID);
     index_init(DIV_INDEX, content, $('#index_switch'));
     $("pre").addClass("prettyprint");
     prettyPrint();
     // TODO 此时得到的index 的宽度总是1? 但是在resume里可以得正常的值
     close_attach_auto();
+}
+
+function ShowImg(Imgs, ID)
+{
+    Imgs.each(function(){
+        url = $(this).attr('date-src');
+        if (url[0] == '/' || 
+            url.substring(0,7) == 'http://' ||
+            url.substring(0,8) == 'https://')
+        {
+            $(this).attr('src', url)
+        }
+        else{
+            $(this).attr('src', 'store/' + ID + '/' + url);
+        }
+    });
 }
 
 function EditWithGvim()

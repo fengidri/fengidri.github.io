@@ -187,6 +187,9 @@ h2#ctitle{
     border-bottom:     1px     solid;
     padding-bottom: 3px;
 }
+#listpost div span{
+    float:right;
+}
 #edit{
     position:fixed;
     top:1em;
@@ -216,4 +219,8 @@ div#buttom{
     margin-top: 3em;
     padding: 1em;
     background-color: #eee;
+}
+#chapter img{
+    display: block;
+    margin:auto;
 }
