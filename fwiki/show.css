@@ -26,3 +26,11 @@ pre
     font-size:12pt;
     text-indent: 0pt;
 }
+table td{
+    border: 1px solid;
+    padding: 1em;
+
+}
+table{
+  border-collapse:collapse;
+}
