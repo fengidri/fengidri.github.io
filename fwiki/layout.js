@@ -221,18 +221,37 @@ function ShowChapter(ID)
             content.html(data);
         }
     });
-    ShowImg(content.find('img'), CHAPTER_ID);
     index_init(DIV_INDEX, content, $('#index_switch'));
     $("pre").addClass("prettyprint");
     prettyPrint();
     // TODO 此时得到的index 的宽度总是1? 但是在resume里可以得正常的值
     close_attach_auto();
+    ResizeImg(content.find('img'));
 }
 
-function ShowImg(Imgs, ID)
+function ResizeImg(Imgs) // 调整图片的宽度
+{
+    function resize()
+    {
+        var w = DIV_CHAPTER.width() * 0.8;
+        var img_w = $(this).width();//图片宽度 
+        var img_h = $(this).height();//图片高度 
+        if(img_w>w){//如果图片宽度超出容器宽度--要撑破了 
+            var height = (w*img_h)/img_w; //高度等比缩放 
+            $(this).css({"width":w,"height":height});//设置缩放后的宽度和高度 
+        }
+    }
+    Imgs.each(function(){
+        $(this).load(resize);
+    });
+
+}
+
+function ShowImg(Imgs, ID) // 真实的img url 保存在date-src中
 {
     Imgs.each(function(){
         url = $(this).attr('date-src');
+        if (!url) return;
         if (url[0] == '/' || 
             url.substring(0,7) == 'http://' ||
             url.substring(0,8) == 'https://')
