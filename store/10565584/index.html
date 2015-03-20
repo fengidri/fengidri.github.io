@@ -1,65 +1,77 @@
-}
-}
-</p>
-<h3>SystemTap介绍</h3><p>
 
-SystemTap是一个深入到内核的分析工具. 它可以分析通过插入钩子的方法来
+<!-- ParSection:     level: 0 (0, 20, 0) -->
+
+<!-- ParSection:     level: 1 (0, 20, 0) -->
+
+<!-- ParSection:     level: 2 (0, 20, 0) -->
+<p></p>
+
+<!-- ParSection:     level: 0 (20, 83, 20) -->
+
+<h3>SystemTap介绍</h3>
+
+<!-- ParSection:     level: 1 (20, 83, 26) -->
+
+<!-- ParSection:     level: 2 (20, 83, 26) -->
+<p>SystemTap是一个深入到内核的分析工具. 它可以分析通过插入钩子的方法来
 对于系统中的调用进行分析.</p>
 
 <p>SystemTap的核心思想是事件（event），以及给出处理该事件的句柄（Handler）。
 SystemTap会监控这些事件, 当一个特定的事件发生时，内核运行该处理句柄，
 就像快速调用一个子函数一样，处理完之后恢复到内核原始状态。
 
-<ul>
+    <ul>
 
-
-<li>事件（Event）：SystemTap定义了很多种事件，例如进入或退出某个内核函数、
+        <li> 事件（Event）：SystemTap定义了很多种事件，例如进入或退出某个内核函数、
 定时器时间到、整个SystemTap会话启动或退出等等。
 
-<li>句柄（Handler）：就是一些脚本语句，描述了当事件发生时要完成的工作，
+        <li> 句柄（Handler）：就是一些脚本语句，描述了当事件发生时要完成的工作，
 通常是从事件的上下文提取数据，将它们存入内部变量中，或者打印出来。
-
-</ul>
-</p>
+    </ul></p>
 
 <p>SystemTap工作原理是通过将脚本语句翻译成C语句，编译成内核模块。
 模块加载之后，将所有探测的事件以钩子的方式挂到内核上，当任何处理器上的某个事件发生时，相应钩子上句柄就会被执行。
 最后，当SystemTap会话结束之后，钩子从内核上取下，移除模块。</p>
 
-<p></p>
-<h3>架构</h3><p>
+<!-- ParSection:     level: 0 (83, 182, 83) -->
 
-运行一个SystemTap脚本就意味着开启了一个session. 
+<h3>架构</h3>
+
+<!-- ParSection:     level: 1 (83, 182, 88) -->
+
+<!-- ParSection:     level: 2 (83, 182, 88) -->
+<p>运行一个SystemTap脚本就意味着开启了一个session. 
 这个session 会执行下面会的方法过程.</p>
 
 <p>
-<ul>
+    <ul>
 
-
-<li>SystemTap会检查脚本, 针对于在tapset 库中已经存在的tapset, SystemTap会
+        <li> SystemTap会检查脚本, 针对于在tapset 库中已经存在的tapset, SystemTap会
 使用库中对应的定义来替代它. 这些库一般在/usr/share/SystemTap/tapset</p>
 
 <p>
-<li>SystemTap会把这些脚本翻译成C, 然后使用系统中的C 编译器来创建内核模块.</p>
+        <li> SystemTap会把这些脚本翻译成C, 然后使用系统中的C 编译器来创建内核模块.</p>
 
 <p>
-<li>下面由SystemTap-runtime中的staprun 把模块载入到的内核中, 并让钩子生效.</p>
+        <li> 下面由SystemTap-runtime中的staprun 把模块载入到的内核中, 并让钩子生效.</p>
 
 <p>
-<li>事件发生的时候, 对应的处理方法就会生效
+        <li> 事件发生的时候, 对应的处理方法就会生效
 
-<li>一旦SystemTapSession 结束了, 探头就会失效. 内核模块也会被unload.
-
-</ul>
-</p>
+        <li> 一旦SystemTapSession 结束了, 探头就会失效. 内核模块也会被unload.
+    </ul></p>
 
 <p>这一系列的运作都是一个单独的命令行工具stap进行驱动的. Stap 是SystemTap的主前端
 工具.</p>
 
-<p></p>
-<h3>SystemTap脚本</h3><p>
+<!-- ParSection:     level: 0 (182, 649, 182) -->
 
-在大多数情况下, stap 脚本是一个SystemTapsession的基础. SystemTapscripts 指导
+<h3>SystemTap脚本</h3>
+
+<!-- ParSection:     level: 1 (189, 338, 189) -->
+
+<!-- ParSection:     level: 2 (189, 338, 189) -->
+<p>在大多数情况下, stap 脚本是一个SystemTapsession的基础. SystemTapscripts 指导
 SystemTap收集什么样的信息, 一旦信息收集到了之后做什么.</p>
 
 <p>事件与处理方法的共同体被叫做probe(探针). 一个SystemTapscripts 可以有很多个probe.</p>
@@ -95,42 +107,38 @@ probe	event {statements}
 <p><pre>
 function function_name(arguments) {statements}
 probe event {function_name(arguments)}
-ffff
 </pre>
 </p>
 
-<p></p>
-<h4>Event</h4><p>
+<!-- ParSection:     level: 1 (338, 649, 338) -->
 
-SystemTap事件可以概括地分成两类: 同步的与异步的. </p>
+<h4>Event</h4>
 
-<p></p>
-<h5>同步事件</h5><p>
-</p>
+<!-- ParSection:     level: 2 (343, 351, 343) -->
+<p>SystemTap事件可以概括地分成两类: 同步的与异步的. </p>
 
+<!-- ParSection:     level: 2 (351, 529, 351) -->
+
+<h5>同步事件</h5>
 <p>同步事件发生在任何程序执行一个内核代码中特定的位置对应的指令时. 这
 给个其它的事件一个参考点, 可以从这里获得上下文的数据.</p>
 
 <p>同步事件的例子:</p>
 
 <p>
-<ul>
+    <ul>
 
-
-<li></p>
-
-<p>这个指向是进行系统调用的事件. 增加一个.return是指向系统调用的退出. 
+        <li>
+这个指向是进行系统调用的事件. 增加一个.return是指向系统调用的退出. 
 比如要指定系统调用close的entry和exit. 可以分别使用syscall.close和syscall.close.return.</p>
 
 <p>
-<li></p>
-
-<p>这是虚拟文件系统(VFS) 的操作入口, 与syscall 相似增加一个.return会监控操作的exit.</p>
+        <li>
+这是虚拟文件系统(VFS) 的操作入口, 与syscall 相似增加一个.return会监控操作的exit.</p>
 
 <p>
-<li></p>
-
-<p>内核函数的入口. 比如kernel.function("sys_open")发生成内核函数sys_open被系统中的thread
+        <li>
+内核函数的入口. 比如kernel.function("sys_open")发生成内核函数sys_open被系统中的thread
 调用的时候. 如果想指向函数的返回, 可以在事件语句的后面加上.return如: 
 kernel.function("sys_open").return</p>
 
@@ -146,51 +154,41 @@ probe kernel.function("*@net/socket.c").return { }
 所以没有信息会被收集和输出.</p>
 
 <p>
-<li></p>
-
-<p>tracepoint的静态探针. 最近kernels(2.6.0 and newer) 包括一些特别的内核事件诊断. 
+        <li>
+tracepoint的静态探针. 最近kernels(2.6.0 and newer) 包括一些特别的内核事件诊断. 
 这些事件使用tracepoint 进行静态标记. 一个SystemTap中可以用到的例子是
 kernel.trace("kfree_skb")这个是每一次内核中network buffer 被释放的时候. </p>
 
 <p>
-<li></p>
-
-<p>允许你监控linux kernel 模块中的函数, 如:
+        <li>
+允许你监控linux kernel 模块中的函数, 如:
 <pre>
 probe module("ext3").function("*") { }
 probe module("ext3").function("*").return { }
 </pre>
 
-这个例子分别监控ext3 模块中的所有的函数的entry与exit.</p>
+这个例子分别监控ext3 模块中的所有的函数的entry与exit.
+    </ul></p>
 
-<p>
-</ul>
-</p>
+<!-- ParSection:     level: 2 (529, 649, 529) -->
 
-<p></p>
-<h5>异步事件</h5><p>
-</p>
-
+<h5>异步事件</h5>
 <p>异步事件并不是指代码中特定的指令或位置. 这是主要由一系列由记数器, 定时器以及相似的结构
 组成的探针.</p>
 
 <p>
-<ul>
+    <ul>
 
-
-<li></p>
-
-<p>指向SystemTapsession 启动. 因此脚本一运行就执行.</p>
+        <li>
+指向SystemTapsession 启动. 因此脚本一运行就执行.</p>
 
 <p>
-<li></p>
-
-<p>SystemTapsession结束.</p>
+        <li>
+SystemTapsession结束.</p>
 
 <p>
-<li></p>
-
-<p>事件指向的handler会被定期执行. </p>
+        <li>
+事件指向的handler会被定期执行. </p>
 
 <p><pre>
 probe timer.s(4)
@@ -202,40 +200,40 @@ probe timer.s(4)
 这个探针会4s 输出一次. 
 还有下面的事件: 
 
-<ul>
+    <ul>
 
+        <li> timer.ms(milliseconds)
 
-<li>timer.ms(milliseconds)
+        <li> timer.us(microseconds)
 
-<li>timer.us(microseconds)
+        <li> timer.ns(nanoseconds)
 
-<li>timer.ns(nanoseconds)
+        <li> timer.hz(hertz)
 
-<li>timer.hz(hertz)
-
-<li>timer.jiffies(jiffies)
-
-</ul>
-</p>
+        <li> timer.jiffies(jiffies)
+    </ul></p>
 
 <p>当与其它的探针相结合的时候, 定时器事件可以让你得到周期性的更新并且可以看出信息
-每一次是如何变化的.</p>
+每一次是如何变化的.
+    </ul></p>
 
-<p>
-</ul>
-</p>
+<!-- ParSection:     level: 0 (649, 808, 649) -->
 
-<p></p>
-<h3>基础的SystemTap句柄结构</h3><p>
+<h3>基础的SystemTap句柄结构</h3>
 
-SystemTap的句柄支持几种基本的结构.
+<!-- ParSection:     level: 1 (657, 675, 657) -->
+
+<!-- ParSection:     level: 2 (657, 675, 657) -->
+<p>SystemTap的句柄支持几种基本的结构.
 大多数这些处理结构的语法接近于C, awk. 这一节介绍几种常有的handler 结构.
 这将有助于你编写简单的SystemTap Script.</p>
 
-<p></p>
-<h4>变量</h4><p>
+<!-- ParSection:     level: 1 (675, 808, 675) -->
 
-在handler中可以自由地使用变量. 简单地选择一个变量名, 并把一个函数的返回值或
+<h4>变量</h4>
+
+<!-- ParSection:     level: 2 (675, 808, 680) -->
+<p>在handler中可以自由地使用变量. 简单地选择一个变量名, 并把一个函数的返回值或
 一个表达式给它, 并且可以在一个表达式中使用它. SystemTap会自动根据它的值的类型
 判断它是一个字符还是一个整数. 比如: 你使用变量foo 表示gettimeofday_s()(形如:
 foo = gettimeofday_s()), 这样foo 会被识别为一个数字, 可以在printf() 中能过
@@ -266,5 +264,4 @@ global 语句允许脚本使用变量count_jiffies和count_ms可以被probe time
 probe timer.jiffies(100) { count_jiffies ++ }
 </pre>
 
-在这个例子中, SystemTap把count_jiffies 理解为一个整数. 因为没有这个变量没有初始化, 所以
-默认初始化为0.
+在这个例子中, SystemTap把count_jiffies 理解为一个整数. 因为没有这个变量没有初始化, 所以</p>
