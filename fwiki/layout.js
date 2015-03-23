@@ -177,6 +177,25 @@ function ChapterTime(info)
     return ChapterTime_(info.ctime);
 }
 
+function SplitPages(content)
+{
+    var hs = 1176; 
+    var h = content.height();
+    var p = $('div#page');
+    var offset_l = content.offset().left + content.outerWidth();
+    var offset_t = content.offset().top;
+    var i;
+    for(i=1; i< h/hs; i++)
+    {
+        var _p = p.clone();
+        _p.show();
+        $('body').append(_p);
+        _p.offset({top: i * hs + offset_t, left: offset_l});
+        _p.text(i + '.');
+    }
+
+}
+
 function ShowChapter(ID)
 {
     var info = GetInfo(ID);
@@ -227,6 +246,7 @@ function ShowChapter(ID)
     // TODO 此时得到的index 的宽度总是1? 但是在resume里可以得正常的值
     close_attach_auto();
     ResizeImg(content.find('img'));
+    SplitPages(content);
 }
 
 function ResizeImg(Imgs) // 调整图片的宽度
@@ -360,7 +380,10 @@ $(document).ready(function(){
     else{
         ShowListPost();
     }
+//mm = $('<div#TX>').css('height', '10mm');
+//$('body').append(mm)
+//alert(mm.height())
+//alert($('#my_mm').height())
 });
-
 
 

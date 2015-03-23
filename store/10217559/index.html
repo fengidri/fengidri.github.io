@@ -571,7 +571,7 @@ device[pid(),execname(),uid(),ppid(),"W"] = devname
 
 <p>注意所有的关联数据必须做为全局变量进行申明, 无论它是在一个探针还是多个探针中使用. </p>
 
-<!-- ParSection:     level: 0 (1993, 2187, 1993) -->
+<!-- ParSection:     level: 0 (1993, 2633, 1993) -->
 
 <h3>SystemTap数组操作</h3>
 
@@ -625,11 +625,11 @@ array_name[index_expression] ++
 </pre>
 </p>
 
-<!-- ParSection:     level: 1 (2141, 2187, 2141) -->
+<!-- ParSection:     level: 1 (2141, 2261, 2141) -->
 
 <h4>处理数组中的多个元素</h4>
 
-<!-- ParSection:     level: 2 (2141, 2187, 2146) -->
+<!-- ParSection:     level: 2 (2141, 2261, 2146) -->
 <p>当你在一个数组中收集了足够的信息的时候, 你会把数据取回并处理这些数据, 从而让这些数据真正有意义. </p>
 
 <p>最好的处理数组的键值对就的方法就是使用<b>foreach</b>语句. </p>
@@ -648,4 +648,228 @@ probe timer.s(3)
 </pre>
 </p>
 
-<p>第二个探针里, <b>foreach</b>语句使用变量count来表示<b>reads</b>中的key.</p>
+<p>第二个探针里, <b>foreach</b>语句使用变量count来表示<b>reads</b>中的key.
+而同一个探针中使用形如<b>count</b>的方式引用这个key对应的值. </p>
+
+<p>你可以批示脚本处理这数据以一种指定的顺序通过<b>+</b>升序或
+<b>-</b>降序. 同时也还可以限制脚本重复处理的数量, 通过形如
+<b>limit value</b>的.</p>
+
+<p>如下是一个例子:
+<pre>
+probe timer.s(3)
+{
+  foreach (count in reads- limit 10)
+    printf("%s : %d \n", count, reads[count])
+}
+</pre>
+</p>
+
+<p><b>foreach</b>语法指定脚本按照<b>reads</b>中的value的降序 的方式
+处理数组中的元素. 
+<b>limit 10</b>这个选项指定了, <b>foreach</b>只处理开始的10 个元素.
+从值最大的开始.</p>
+
+<!-- ParSection:     level: 1 (2261, 2303, 2261) -->
+
+<h4>清空/删除数组或其元素</h4>
+
+<!-- ParSection:     level: 2 (2261, 2303, 2266) -->
+<p>有的时候, 你也许要清除数组元素对应的值, 或要清空整个数组, 为了可以
+在另一个探针中重新使用.</p>
+
+<p>为了做到这一点, 你要清空数组中积累的值. 你可以使用<b>delete</b>这个
+操作来做到删除数组的元素或整修数组. </p>
+
+<p>如下是一个例子:</p>
+
+<p><pre>
+global reads
+probe vfs.read
+{
+  reads[execname()] ++
+}
+probe timer.s(3)
+{
+  foreach (count in reads)
+    printf("%s : %d \n", count, reads[count])
+  delete reads
+}
+</pre>
+
+这里还有一个例子:
+<pre>
+global reads, totalreads
+
+probe vfs.read
+{
+  reads[execname()] ++
+  totalreads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads-)
+    printf("%s : %d \n", count, reads[count])
+  delete reads
+}
+
+probe end
+{
+  printf("TOTALS\n")
+  foreach (total in totalreads-)
+    printf("%s : %d \n", total, totalreads[total])
+}
+</pre>
+</p>
+
+<!-- ParSection:     level: 1 (2303, 2402, 2303) -->
+
+<h4>在条件判断中使用数组</h4>
+
+<!-- ParSection:     level: 2 (2303, 2402, 2308) -->
+<p>你也可以在<b>if</b>中使用数组. 这很有用, 如果你想执行一个
+子程序断, 如果数组中的一个值合符一个特定的条件. 考虑下面的例子: 
+<pre>
+global reads
+probe vfs.read
+{
+  reads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads-)
+    if (reads[count] &gt;= 1024)
+      printf("%s : %dkB \n", count, reads[count]/1024)
+    else
+      printf("%s : %dB \n", count, reads[count])
+}
+</pre>
+
+脚本统计每一个程序调用VFS read 的次数. 每三秒指印一次. 
+如果对应的值大于等于1024, 就把输出的形式围成<b>kB</b>的形式. </p>
+
+<p>你也可以测试一个特定的key 是不是数组中的成员. 
+进一步, 可以在<b>if</b>中使用. 
+<pre>
+if([index_expression] in array_name) statement
+</pre>
+
+<pre>
+global reads
+
+probe vfs.read
+{
+  reads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads+)
+    printf("%s : %d \n", count, reads[count])
+  if(["stapio"] in reads) {
+    printf("stapio read detected, exiting\n")
+    exit()
+  }
+}
+</pre>
+</p>
+
+<p><b>if(["stapio"] in reads)</b>用于在<b>stapio</b>被加入到
+数组<b>reads</b>中的时候, 执行打印并退出.</p>
+
+<!-- ParSection:     level: 1 (2402, 2633, 2402) -->
+
+<h4>计算统计总量</h4>
+
+<!-- ParSection:     level: 2 (2402, 2633, 2407) -->
+<p>统计总量被用于基于一个数字的值进行收集数据收集信息. 这很重要在
+快速积累新的数据, 并且数据量很大的情况. 
+(只用于收集, 聚合流数据). 
+统计总量可以做为全局变量使用也可以做为数组中的元素. </p>
+
+<p>增加值到统计总量, 使用操作符<b><<< value</b>.</p>
+
+<p><pre>
+global reads
+probe vfs.read
+{
+  reads[execname()] &lt;&lt;&lt; $count
+}
+</pre>
+</p>
+
+<p>操作符<b><<< $count</b>会保存$count 对应的值为<b>execname{}</b>在数组<b>reads</b>中对应的关联的值. 
+注意, 这些值被保存了, 没有被用于增加到每一个key的对应的值上, 也
+没有用来替换当前的值. 
+从某些角度上来说, 可以认为每一个key有多个对应的值, 在每一个探针在工作的
+过程中. </p>
+
+<p>可以使用语法如<b>extractor(variable/array index expression)</b>来
+处理收集到的数据. 其中<b>extractor</b>可以是下面的一个:
+
+    <ul>
+
+<li><b>count</b>&nbsp;&nbsp;&nbsp;&nbsp;返回所有保存在变量或数组索引表达式值的数量. 
+the expression @count(reads[execname()]) will return how many values are stored in each unique key in array reads.</p>
+
+<p>
+<li><b>sum</b>&nbsp;&nbsp;&nbsp;&nbsp;返回保存在变量或数组索引中的数的和.</p>
+
+<p>
+<li><b>min</b>&nbsp;&nbsp;&nbsp;&nbsp;同上, 只是返回最小值. 
+
+<li><b>max</b>&nbsp;&nbsp;&nbsp;&nbsp;你知道的, 返回最大值. 
+
+<li><b>avg</b>&nbsp;&nbsp;&nbsp;&nbsp;这个就牛了是, 平均值. 
+    </ul>
+当你在使用统计总量的时候, 你也可以构造多索引的形式(最多5个). 
+这是有用的, 这是有用的, 在一个探针里获取额外的上下文信息. 
+如:
+<pre>
+global reads
+probe vfs.read
+{
+  reads[execname(),pid()] &lt;&lt;&lt; 1
+}
+probe timer.s(3)
+{
+  foreach([var1,var2] in reads)
+    printf("%s (%d) : %d \n", var1, var2, @count(reads[var1,var2]))
+}
+</pre>
+</p>
+
+<p>应该可以看明白吧!!!!</p>
+
+<!-- ParSection:     level: 0 (2633, 2732, 2633) -->
+
+<h3>Tapsets</h3>
+
+<!-- ParSection:     level: 1 (2633, 2732, 2638) -->
+
+<!-- ParSection:     level: 2 (2633, 2732, 2638) -->
+<p><b>Tapsets</b>是一个由编写的方便用于SystemTap Script使用的探针与函数的脚本构成的库. 
+当用户运行一个SystemTap Script, SystemTap会在<b>Tapsets</b>中检查脚本的探针事件和handlers.
+SystemTap会在把脚本转换成C 之前载入对应的探针与函数.</p>
+
+<p><b>Tapsets</b>如SystemTap Script一样使用<b>.stp</b>作为文件的扩展名一样,.
+默认的情况下, 标准的库会放到<b>/usr/share/systemtap/tapset</b>.
+不同于SystemTap Script <b>Tapsets</b>不可以直接运行. 它们形成库, 其他脚本可以使用定义.</p>
+
+<p><b>Tapsets</b>库是一个抽象层, 可以方便用户来定义事件和函数. 
+<b>Tapsets</b>提供用户想要作为事件指定的函数的别名. 知道这些别名, 对于很多
+情况下, 是很方便记忆的, 相对于内核函数, 特别是还要区分不同的内核版本. </p>
+
+<!-- ParSection:     level: 0 (2732, 2754, 2732) -->
+
+<h3>参考</h3>
+
+<!-- ParSection:     level: 1 (2732, 2754, 2737) -->
+
+<!-- ParSection:     level: 2 (2732, 2754, 2737) -->
+<p>&nbsp;<a href=https://sourceware.org/systemtap/SystemTap_Beginners_Guide/understanding-how-systemtap-works.html >Understanding How SystemTap Works</a>&nbsp;</p>

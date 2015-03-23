@@ -224,3 +224,11 @@ div#buttom{
     display: block;
     margin:auto;
 }
+#page{
+  padding: 1em;
+  font-style: italic;
+  font-size: 20pt;
+  position: absolute;
+  display: none;
+  
+}

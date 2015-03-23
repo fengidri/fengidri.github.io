@@ -548,10 +548,196 @@ probe timer.s(3)
 \stoptyping
 
 第二个探针里, \bold{foreach} 语句使用变量count来表示\bold{reads}中的key.
+而同一个探针中使用形如\bold{count}的方式引用这个key对应的值. 
+
+你可以批示脚本处理这数据以一种指定的顺序通过\bold{+}升序或
+\bold{-}降序. 同时也还可以限制脚本重复处理的数量, 通过形如
+\bold{limit value} 的.
+
+如下是一个例子:
+\starttyping
+probe timer.s(3)
+{
+  foreach (count in reads- limit 10)
+    printf("%s : %d \n", count, reads[count])
+}
+\stoptyping
+
+\bold{foreach} 语法指定脚本按照\bold{reads}中的value的降序 的方式
+处理数组中的元素. 
+\bold{limit 10 }这个选项指定了, \bold{foreach} 只处理开始的10 个元素.
+从值最大的开始.
 
 
 
+\subsection{清空/删除数组或其元素}
+有的时候, 你也许要清除数组元素对应的值, 或要清空整个数组, 为了可以
+在另一个探针中重新使用.
+
+为了做到这一点, 你要清空数组中积累的值. 你可以使用\bold{delete} 这个
+操作来做到删除数组的元素或整修数组. 
+
+如下是一个例子:
+
+\starttyping
+global reads
+probe vfs.read
+{
+  reads[execname()] ++
+}
+probe timer.s(3)
+{
+  foreach (count in reads)
+    printf("%s : %d \n", count, reads[count])
+  delete reads
+}
+\stoptyping
+这里还有一个例子:
+\starttyping
+global reads, totalreads
+
+probe vfs.read
+{
+  reads[execname()] ++
+  totalreads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads-)
+    printf("%s : %d \n", count, reads[count])
+  delete reads
+}
+
+probe end
+{
+  printf("TOTALS\n")
+  foreach (total in totalreads-)
+    printf("%s : %d \n", total, totalreads[total])
+}
+\stoptyping
+
+\subsection{在条件判断中使用数组}
+你也可以在\bold{if} 中使用数组. 这很有用, 如果你想执行一个
+子程序断, 如果数组中的一个值合符一个特定的条件. 考虑下面的例子: 
+\starttyping
+global reads
+probe vfs.read
+{
+  reads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads-)
+    if (reads[count] >= 1024)
+      printf("%s : %dkB \n", count, reads[count]/1024)
+    else
+      printf("%s : %dB \n", count, reads[count])
+}
+\stoptyping
+脚本统计每一个程序调用VFS read 的次数. 每三秒指印一次. 
+如果对应的值大于等于1024, 就把输出的形式围成\bold{kB}的形式. 
+
+你也可以测试一个特定的key 是不是数组中的成员. 
+进一步, 可以在\bold{if} 中使用. 
+\starttyping
+if([index_expression] in array_name) statement
+\stoptyping
+\starttyping
+global reads
+
+probe vfs.read
+{
+  reads[execname()] ++
+}
+
+probe timer.s(3)
+{
+  printf("=======\n")
+  foreach (count in reads+)
+    printf("%s : %d \n", count, reads[count])
+  if(["stapio"] in reads) {
+    printf("stapio read detected, exiting\n")
+    exit()
+  }
+}
+\stoptyping
+
+\bold{if(["stapio"] in reads) } 用于在\bold{stapio} 被加入到
+数组\bold{reads} 中的时候, 执行打印并退出.
+
+\subsection{计算统计总量}
+统计总量被用于基于一个数字的值进行收集数据收集信息. 这很重要在
+快速积累新的数据, 并且数据量很大的情况. 
+(只用于收集, 聚合流数据). 
+统计总量可以做为全局变量使用也可以做为数组中的元素. 
+
+增加值到统计总量, 使用操作符\bold{<<< value}.
 
 
+\starttyping
+global reads
+probe vfs.read
+{
+  reads[execname()] <<< $count
+}
+\stoptyping
+
+操作符\bold{<<< \$count} 会保存\$count 对应的值为\bold{execname{}}
+在数组\bold{reads}中对应的关联的值. 
+注意, 这些值被保存了, 没有被用于增加到每一个key的对应的值上, 也
+没有用来替换当前的值. 
+从某些角度上来说, 可以认为每一个key有多个对应的值, 在每一个探针在工作的
+过程中. 
+
+可以使用语法如\bold{extractor(variable/array index expression)} 来
+处理收集到的数据. 其中\bold{extractor} 可以是下面的一个:
+\startitemize
+\item  {count} 返回所有保存在变量或数组索引表达式值的数量. 
+the expression @count(reads[execname()]) will return how many values are stored in each unique key in array reads.
+
+\item  {sum}
+返回保存在变量或数组索引中的数的和.
+
+\item  {min} 同上, 只是返回最小值. 
+\item  {max} 你知道的, 返回最大值. 
+\item  {avg} 这个就牛了是, 平均值. 
+\stopitemize
+当你在使用统计总量的时候, 你也可以构造多索引的形式(最多5个). 
+这是有用的, 这是有用的, 在一个探针里获取额外的上下文信息. 
+如:
+\starttyping
+global reads
+probe vfs.read
+{
+  reads[execname(),pid()] <<< 1
+}
+probe timer.s(3)
+{
+  foreach([var1,var2] in reads)
+    printf("%s (%d) : %d \n", var1, var2, @count(reads[var1,var2]))
+}
+\stoptyping
+
+应该可以看明白吧!!!!
 
 
+\section{Tapsets}
+\def\ts{\bold{Tapsets}}
+\ts 是一个由编写的方便用于\ss 使用的探针与函数的脚本构成的库. 
+当用户运行一个\ss, \st 会在\ts 中检查脚本的探针事件和handlers.
+\st 会在把脚本转换成C 之前载入对应的探针与函数.
+
+\ts 如\ss 一样使用\bold{.stp} 作为文件的扩展名一样,.
+默认的情况下, 标准的库会放到\bold{/usr/share/systemtap/tapset}.
+不同于\ss\ \ts 不可以直接运行. 它们形成库, 其他脚本可以使用定义.
+
+\ts 库是一个抽象层, 可以方便用户来定义事件和函数. 
+\ts 提供用户想要作为事件指定的函数的别名. 知道这些别名, 对于很多
+情况下, 是很方便记忆的, 相对于内核函数, 特别是还要区分不同的内核版本. 
+
+\section{参考}
+\goto{Understanding How SystemTap Works}{https://sourceware.org/systemtap/SystemTap_Beginners_Guide/understanding-how-systemtap-works.html}
