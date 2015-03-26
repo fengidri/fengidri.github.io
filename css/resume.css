@@ -21,6 +21,14 @@ body{
     border: 1px solid;
     padding:2em;
 }
+#print
+{ 
+    top:3em;
+    right:1em;
+    position:fixed;
+    cursor:pointer;
+    width: 40px;
+}
 #index_switch
 { 
     top:3em;
