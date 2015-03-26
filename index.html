@@ -12,8 +12,49 @@
 <script src='fwiki/layout.js'></script>
 <script src='fwiki/options.js'></script>
 
-<script>var duoshuoQuery = {short_name:"fengidri"};</script>
-<script src="http://static.duoshuo.com/embed.js"></script>
+
+
+<script>
+$(document).ready(function(){
+    window.onresize = close_attach_auto;
+    DIV_LISTPOST    = $('div#listpost');
+    DIV_HEADER      = $('div#header');
+    DIV_CLASS       = $('div#class_div');
+    DIV_CHAPTER     = $('div#chapter');
+    DIV_INDEX       = $('div#index');
+    DIV_DUOSHUO     = $('div.ds-thread');
+
+
+
+    DIV_LISTPOST.on('click', 'div', EShowChapter);
+    DIV_CLASS.on('click', 'div', ClassShowListPost);
+    $('div#class_container h3').click(function(){
+        $('div#class_div' ).toggle();
+    });
+
+
+    var path = window.location.pathname;
+    if (path[path.length - 1] != '/')
+    {
+        var t = path.split('/');
+        t = t.slice(0, t.length - 1);
+        path = t.join('/') + '/';
+    }
+
+    URL_PREFIX = path + URL_PREFIX;
+    URL_INDEX  = path + URL_INDEX;
+    URL_CLASS  = path + URL_CLASS;
+
+    DataInit();
+    var cname = getUrlParams().c;
+    if (cname){
+        ShowListPost(cname);
+    }
+    else{
+        ShowListPost();
+    }
+})
+</script>
 
 
 
@@ -27,27 +68,8 @@
 
 <div id='listpost'></div>
 
-<div id='chapter'>
-    <h2 id=ctitle></h1>
-    <div id=content ></div>
-    <label id=class> </label>
-    <label id=tag> </label>
-    <label id=time> </label>
-<!-- 多说评论框 start -->
-	<div class="ds-thread" 
-        data-thread-key="" 
-        data-title="" 
-        data-url=""
-        ></div>
-<!-- 多说评论框 end -->
-</div>
 
-<img src='images/index_switch.gif'   id=index_switch />
-<div id='index'></div>
-<div id='edit'>
-    <img id='gvim' src='images/gvim.png'>
-    <img id=option src='images/option.png'>
-</div>
+
 
 <div >
     <br /><br /><br /><br /><br /><br /><br /><br />
@@ -69,16 +91,6 @@
                     + cnzz_protocol 
                     + "s95.cnzz.com/z_stat.php%3Fid%3D1253644473%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
     </script>
-</div>
-
-<div id=layer_option>
-    <label>标题:</label><input id=title name=title /><br />
-    <label>分类:</label><select id=class name=class ></select> <button id=add>+</button><br />
-    <label>标签:</label><input id=tags name=tags /></input><br />
-    <button id='submit'> 提交</button>
-</div>
-
-<div id=page >
 </div>
 
 </body>
