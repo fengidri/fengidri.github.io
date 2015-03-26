@@ -7,6 +7,18 @@ p{
     margin-bottom:1em;
     line-height:200%;
 }
+ul{
+    background-color: #f5f2f0;
+    padding: 2em;
+    margin: 2em 2em;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    border-width: 7px;
+    border-color: #e0dfcc;
+    border-style: solid;
+    text-shadow: 0 1px white;
+}
 li{
     padding:4pt;
     line-height:200%;
@@ -17,7 +29,6 @@ pre
 { 
     border-width:1pt;
     border-style:solid;
-    padding:7pt;
     width:80%;
     margin:auto;
     margin-top:5pt;
@@ -26,6 +37,11 @@ pre
     font-size:12pt;
     text-indent: 0pt;
     overflow:auto;
+    border-radius: 20px;
+    border-width: 7px;
+    padding:15pt;
+    border-color: #e0eacc;
+    background-color: #f5f2f0;
 }
 table td{
     border: 1px solid;
