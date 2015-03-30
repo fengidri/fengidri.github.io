@@ -142,10 +142,13 @@ $(document).ready(function(){
     URL_INDEX  = path + URL_INDEX;
     URL_CLASS  = path + URL_CLASS;
 
+
     DataInit();
     var ID=getUrlParams().id;
     if (ID){
         ShowChapter(ID);
+        $('div#title #class').text(GetClass(ID)).attr('href', GetClassHref(ID));
+
     }
 });
 

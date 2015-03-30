@@ -33,23 +33,34 @@ div#h5{
 div#h6{
     text-indent:4em;
 }
-h1#title
+h1#title{
+    margin: auto;
+    margin-top: 2em;
+    text-align: center;
+}
+div#title
 { 
     margin:2em;
-    color:green;
-    text-align:center;
+    font-size:15pt;
+    margin-bottom: 1em;
+    padding-left: 0;
+    margin-left: 0;
 }
-h1#title a{
-    color:green;
+div#title a{
+    color:grey;
+    border-bottom: solid 1px  #d3d3d3;
+    text-decoration: none;
 }
 #content h1
 { 
     color:green;
 }
 h2#ctitle{
-    margin:2em;
-    font-size:12pt;
-    text-align:center;
+    margin:0 0 5 0;
+    font-size:18pt;
+}
+h2#ctitle a{
+    text-decoration: none;
 }
 #content h2
 { 
@@ -59,11 +70,12 @@ h2#ctitle{
 }
 #content h3
 { 
-    font-size:17pt;
+    font-size:20pt;
     color:black;
     counter-increment: counter_section;
     counter-reset:counter_subsection;
     margin-top:3em;
+    border-bottom: solid 1px  #d3d3d3;
 }
 #content h3:first-of-type
 { 
@@ -155,8 +167,11 @@ h2#ctitle{
     position:fixed;
     cursor:pointer;
 }
-
-#listpost, #chapter{
+#wrap{
+    width:      1000px;
+    margin:     auto;
+}
+#listpost{
     width:      1000px;
     margin:     auto;
     border:     1px     solid;
@@ -166,13 +181,12 @@ h2#ctitle{
 }
 #chapter{
     border:     0px     solid;
-}
-#chapter #time{
-    float:right;
+    margin:     auto;
+    min-height: 800px;
+    padding:    2em;
 }
 #chapter #content{
-    border:     1px     solid;
-    padding:    2em;
+    /*border:     1px     solid;*/
 }
 #listpost div{
     width:      85%;

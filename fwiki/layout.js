@@ -72,7 +72,17 @@ function GetInfo(ID)
 }
 function GetClass(ID)
 {
-    for (var c in CLASS) if ($.inArray(ID * 1, CLASS[c]) > -1) return c;
+    for (var c in CLASS) 
+        if ($.inArray(ID * 1, CLASS[c]) > -1) 
+            return c;
+}
+
+function GetClassHref(ID)
+{
+    var c = encodeURIComponent(GetClass(ID));
+    var n = '/index.html?c=' + c;
+    return window.location.href.replace(/\/[^/]*$/, n)
+
 }
 
 function ShowListPost()// 显示list post
@@ -196,10 +206,15 @@ function close_attach_auto()
         }else return;
     }
 
+    var cd = $("#class_div");
+    if (cd.length > 0)
+    {
+        if(cd.offset().left < c_r)
+            cd.hide();
+        else
+            cd.show();
 
-    if($("#class_div").offset().left < c_r)
-        $("#class_div").hide();
-    else
-        $("#class_div").show();
+    }
+
 
 }
